@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPackageDetail));
             this.tileNavPane1 = new DevExpress.XtraBars.Navigation.TileNavPane();
             this.btnPush = new DevExpress.XtraBars.Navigation.NavButton();
+            this.btnPushAll = new DevExpress.XtraBars.Navigation.NavButton();
             this.grdDependencies = new DevExpress.XtraGrid.GridControl();
             this.dependencyGroupItemBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.grvDependencies = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -62,7 +63,10 @@
             this.ItemForAuthors = new DevExpress.XtraLayout.LayoutControlItem();
             this.ItemForVersion = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.btnPushAll = new DevExpress.XtraBars.Navigation.NavButton();
+            this.txtLocalNugetUrl = new DevExpress.XtraEditors.TextEdit();
+            this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.txtApiKey = new DevExpress.XtraEditors.TextEdit();
+            this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
             ((System.ComponentModel.ISupportInitialize)(this.tileNavPane1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdDependencies)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dependencyGroupItemBindingSource)).BeginInit();
@@ -94,6 +98,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.ItemForAuthors)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemForVersion)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtLocalNugetUrl.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtApiKey.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
             this.SuspendLayout();
             // 
             // tileNavPane1
@@ -122,13 +130,20 @@
             this.btnPush.Name = "btnPush";
             this.btnPush.ElementClick += new DevExpress.XtraBars.Navigation.NavElementClickEventHandler(this.BtnPush_ElementClick);
             // 
+            // btnPushAll
+            // 
+            this.btnPushAll.Caption = "Push All";
+            this.btnPushAll.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnPushAll.ImageOptions.Image")));
+            this.btnPushAll.Name = "btnPushAll";
+            this.btnPushAll.ElementClick += new DevExpress.XtraBars.Navigation.NavElementClickEventHandler(this.btnPushAll_ElementClick);
+            // 
             // grdDependencies
             // 
             this.grdDependencies.DataSource = this.dependencyGroupItemBindingSource;
-            this.grdDependencies.Location = new System.Drawing.Point(12, 373);
+            this.grdDependencies.Location = new System.Drawing.Point(12, 407);
             this.grdDependencies.MainView = this.grvDependencies;
             this.grdDependencies.Name = "grdDependencies";
-            this.grdDependencies.Size = new System.Drawing.Size(724, 511);
+            this.grdDependencies.Size = new System.Drawing.Size(724, 477);
             this.grdDependencies.TabIndex = 0;
             this.grdDependencies.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.grvDependencies});
@@ -157,6 +172,8 @@
             // 
             // dlyDetail
             // 
+            this.dlyDetail.Controls.Add(this.txtApiKey);
+            this.dlyDetail.Controls.Add(this.txtLocalNugetUrl);
             this.dlyDetail.Controls.Add(this.memoEdit1);
             this.dlyDetail.Controls.Add(this.grdDependencies);
             this.dlyDetail.Controls.Add(this.PackageIdTextEdit);
@@ -179,16 +196,16 @@
             // 
             // memoEdit1
             // 
-            this.memoEdit1.Location = new System.Drawing.Point(740, 373);
+            this.memoEdit1.Location = new System.Drawing.Point(740, 407);
             this.memoEdit1.Name = "memoEdit1";
-            this.memoEdit1.Size = new System.Drawing.Size(724, 511);
+            this.memoEdit1.Size = new System.Drawing.Size(724, 477);
             this.memoEdit1.StyleController = this.dlyDetail;
             this.memoEdit1.TabIndex = 13;
             // 
             // PackageIdTextEdit
             // 
             this.PackageIdTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.packageMetadataBindingSource, "PackageId", true));
-            this.PackageIdTextEdit.Location = new System.Drawing.Point(162, 58);
+            this.PackageIdTextEdit.Location = new System.Drawing.Point(162, 92);
             this.PackageIdTextEdit.Name = "PackageIdTextEdit";
             this.PackageIdTextEdit.Size = new System.Drawing.Size(1287, 24);
             this.PackageIdTextEdit.StyleController = this.dlyDetail;
@@ -201,7 +218,7 @@
             // VersionTextEdit
             // 
             this.VersionTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.packageMetadataBindingSource, "Version", true));
-            this.VersionTextEdit.Location = new System.Drawing.Point(162, 92);
+            this.VersionTextEdit.Location = new System.Drawing.Point(162, 126);
             this.VersionTextEdit.Name = "VersionTextEdit";
             this.VersionTextEdit.Size = new System.Drawing.Size(1287, 24);
             this.VersionTextEdit.StyleController = this.dlyDetail;
@@ -210,7 +227,7 @@
             // AuthorsTextEdit
             // 
             this.AuthorsTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.packageMetadataBindingSource, "Authors", true));
-            this.AuthorsTextEdit.Location = new System.Drawing.Point(162, 126);
+            this.AuthorsTextEdit.Location = new System.Drawing.Point(162, 160);
             this.AuthorsTextEdit.Name = "AuthorsTextEdit";
             this.AuthorsTextEdit.Size = new System.Drawing.Size(1287, 24);
             this.AuthorsTextEdit.StyleController = this.dlyDetail;
@@ -219,7 +236,7 @@
             // DescriptionTextEdit
             // 
             this.DescriptionTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.packageMetadataBindingSource, "Description", true));
-            this.DescriptionTextEdit.Location = new System.Drawing.Point(162, 160);
+            this.DescriptionTextEdit.Location = new System.Drawing.Point(162, 194);
             this.DescriptionTextEdit.Name = "DescriptionTextEdit";
             this.DescriptionTextEdit.Size = new System.Drawing.Size(1287, 24);
             this.DescriptionTextEdit.StyleController = this.dlyDetail;
@@ -228,7 +245,7 @@
             // LanguageTextEdit
             // 
             this.LanguageTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.packageMetadataBindingSource, "Language", true));
-            this.LanguageTextEdit.Location = new System.Drawing.Point(162, 194);
+            this.LanguageTextEdit.Location = new System.Drawing.Point(162, 228);
             this.LanguageTextEdit.Name = "LanguageTextEdit";
             this.LanguageTextEdit.Size = new System.Drawing.Size(1287, 24);
             this.LanguageTextEdit.StyleController = this.dlyDetail;
@@ -237,7 +254,7 @@
             // PackageContentUrlTextEdit
             // 
             this.PackageContentUrlTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.packageMetadataBindingSource, "PackageContentUrl", true));
-            this.PackageContentUrlTextEdit.Location = new System.Drawing.Point(162, 228);
+            this.PackageContentUrlTextEdit.Location = new System.Drawing.Point(162, 262);
             this.PackageContentUrlTextEdit.Name = "PackageContentUrlTextEdit";
             this.PackageContentUrlTextEdit.Size = new System.Drawing.Size(1287, 24);
             this.PackageContentUrlTextEdit.StyleController = this.dlyDetail;
@@ -246,7 +263,7 @@
             // ProjectUrlTextEdit
             // 
             this.ProjectUrlTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.packageMetadataBindingSource, "ProjectUrl", true));
-            this.ProjectUrlTextEdit.Location = new System.Drawing.Point(162, 262);
+            this.ProjectUrlTextEdit.Location = new System.Drawing.Point(162, 296);
             this.ProjectUrlTextEdit.Name = "ProjectUrlTextEdit";
             this.ProjectUrlTextEdit.Size = new System.Drawing.Size(1287, 24);
             this.ProjectUrlTextEdit.StyleController = this.dlyDetail;
@@ -255,7 +272,7 @@
             // PublishedTextEdit
             // 
             this.PublishedTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.packageMetadataBindingSource, "Published", true));
-            this.PublishedTextEdit.Location = new System.Drawing.Point(162, 296);
+            this.PublishedTextEdit.Location = new System.Drawing.Point(162, 330);
             this.PublishedTextEdit.Name = "PublishedTextEdit";
             this.PublishedTextEdit.Size = new System.Drawing.Size(1287, 24);
             this.PublishedTextEdit.StyleController = this.dlyDetail;
@@ -264,7 +281,7 @@
             // SummaryTextEdit
             // 
             this.SummaryTextEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.packageMetadataBindingSource, "Summary", true));
-            this.SummaryTextEdit.Location = new System.Drawing.Point(162, 330);
+            this.SummaryTextEdit.Location = new System.Drawing.Point(162, 364);
             this.SummaryTextEdit.Name = "SummaryTextEdit";
             this.SummaryTextEdit.Size = new System.Drawing.Size(1287, 24);
             this.SummaryTextEdit.StyleController = this.dlyDetail;
@@ -295,9 +312,9 @@
             // layoutControlItem1
             // 
             this.layoutControlItem1.Control = this.grdDependencies;
-            this.layoutControlItem1.Location = new System.Drawing.Point(0, 361);
+            this.layoutControlItem1.Location = new System.Drawing.Point(0, 395);
             this.layoutControlItem1.Name = "layoutControlItem1";
-            this.layoutControlItem1.Size = new System.Drawing.Size(728, 515);
+            this.layoutControlItem1.Size = new System.Drawing.Size(728, 481);
             this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem1.TextVisible = false;
             // 
@@ -312,16 +329,18 @@
             this.ItemForLanguage,
             this.ItemForDescription,
             this.ItemForAuthors,
-            this.ItemForVersion});
+            this.ItemForVersion,
+            this.layoutControlItem3,
+            this.layoutControlItem4});
             this.layoutControlGroup2.Location = new System.Drawing.Point(0, 0);
             this.layoutControlGroup2.Name = "layoutControlGroup2";
-            this.layoutControlGroup2.Size = new System.Drawing.Size(1456, 361);
+            this.layoutControlGroup2.Size = new System.Drawing.Size(1456, 395);
             this.layoutControlGroup2.Text = "Baseic Info";
             // 
             // ItemForPackageId
             // 
             this.ItemForPackageId.Control = this.PackageIdTextEdit;
-            this.ItemForPackageId.Location = new System.Drawing.Point(0, 0);
+            this.ItemForPackageId.Location = new System.Drawing.Point(0, 34);
             this.ItemForPackageId.Name = "ItemForPackageId";
             this.ItemForPackageId.Padding = new DevExpress.XtraLayout.Utils.Padding(5, 5, 5, 5);
             this.ItemForPackageId.Size = new System.Drawing.Size(1432, 34);
@@ -331,7 +350,7 @@
             // ItemForSummary
             // 
             this.ItemForSummary.Control = this.SummaryTextEdit;
-            this.ItemForSummary.Location = new System.Drawing.Point(0, 272);
+            this.ItemForSummary.Location = new System.Drawing.Point(0, 306);
             this.ItemForSummary.Name = "ItemForSummary";
             this.ItemForSummary.Padding = new DevExpress.XtraLayout.Utils.Padding(5, 5, 5, 5);
             this.ItemForSummary.Size = new System.Drawing.Size(1432, 34);
@@ -341,7 +360,7 @@
             // ItemForPublished
             // 
             this.ItemForPublished.Control = this.PublishedTextEdit;
-            this.ItemForPublished.Location = new System.Drawing.Point(0, 238);
+            this.ItemForPublished.Location = new System.Drawing.Point(0, 272);
             this.ItemForPublished.Name = "ItemForPublished";
             this.ItemForPublished.Padding = new DevExpress.XtraLayout.Utils.Padding(5, 5, 5, 5);
             this.ItemForPublished.Size = new System.Drawing.Size(1432, 34);
@@ -351,7 +370,7 @@
             // ItemForProjectUrl
             // 
             this.ItemForProjectUrl.Control = this.ProjectUrlTextEdit;
-            this.ItemForProjectUrl.Location = new System.Drawing.Point(0, 204);
+            this.ItemForProjectUrl.Location = new System.Drawing.Point(0, 238);
             this.ItemForProjectUrl.Name = "ItemForProjectUrl";
             this.ItemForProjectUrl.Padding = new DevExpress.XtraLayout.Utils.Padding(5, 5, 5, 5);
             this.ItemForProjectUrl.Size = new System.Drawing.Size(1432, 34);
@@ -361,7 +380,7 @@
             // ItemForPackageContentUrl
             // 
             this.ItemForPackageContentUrl.Control = this.PackageContentUrlTextEdit;
-            this.ItemForPackageContentUrl.Location = new System.Drawing.Point(0, 170);
+            this.ItemForPackageContentUrl.Location = new System.Drawing.Point(0, 204);
             this.ItemForPackageContentUrl.Name = "ItemForPackageContentUrl";
             this.ItemForPackageContentUrl.Padding = new DevExpress.XtraLayout.Utils.Padding(5, 5, 5, 5);
             this.ItemForPackageContentUrl.Size = new System.Drawing.Size(1432, 34);
@@ -371,7 +390,7 @@
             // ItemForLanguage
             // 
             this.ItemForLanguage.Control = this.LanguageTextEdit;
-            this.ItemForLanguage.Location = new System.Drawing.Point(0, 136);
+            this.ItemForLanguage.Location = new System.Drawing.Point(0, 170);
             this.ItemForLanguage.Name = "ItemForLanguage";
             this.ItemForLanguage.Padding = new DevExpress.XtraLayout.Utils.Padding(5, 5, 5, 5);
             this.ItemForLanguage.Size = new System.Drawing.Size(1432, 34);
@@ -381,7 +400,7 @@
             // ItemForDescription
             // 
             this.ItemForDescription.Control = this.DescriptionTextEdit;
-            this.ItemForDescription.Location = new System.Drawing.Point(0, 102);
+            this.ItemForDescription.Location = new System.Drawing.Point(0, 136);
             this.ItemForDescription.Name = "ItemForDescription";
             this.ItemForDescription.Padding = new DevExpress.XtraLayout.Utils.Padding(5, 5, 5, 5);
             this.ItemForDescription.Size = new System.Drawing.Size(1432, 34);
@@ -391,7 +410,7 @@
             // ItemForAuthors
             // 
             this.ItemForAuthors.Control = this.AuthorsTextEdit;
-            this.ItemForAuthors.Location = new System.Drawing.Point(0, 68);
+            this.ItemForAuthors.Location = new System.Drawing.Point(0, 102);
             this.ItemForAuthors.Name = "ItemForAuthors";
             this.ItemForAuthors.Padding = new DevExpress.XtraLayout.Utils.Padding(5, 5, 5, 5);
             this.ItemForAuthors.Size = new System.Drawing.Size(1432, 34);
@@ -401,7 +420,7 @@
             // ItemForVersion
             // 
             this.ItemForVersion.Control = this.VersionTextEdit;
-            this.ItemForVersion.Location = new System.Drawing.Point(0, 34);
+            this.ItemForVersion.Location = new System.Drawing.Point(0, 68);
             this.ItemForVersion.Name = "ItemForVersion";
             this.ItemForVersion.Padding = new DevExpress.XtraLayout.Utils.Padding(5, 5, 5, 5);
             this.ItemForVersion.Size = new System.Drawing.Size(1432, 34);
@@ -411,18 +430,49 @@
             // layoutControlItem2
             // 
             this.layoutControlItem2.Control = this.memoEdit1;
-            this.layoutControlItem2.Location = new System.Drawing.Point(728, 361);
+            this.layoutControlItem2.Location = new System.Drawing.Point(728, 395);
             this.layoutControlItem2.Name = "layoutControlItem2";
-            this.layoutControlItem2.Size = new System.Drawing.Size(728, 515);
+            this.layoutControlItem2.Size = new System.Drawing.Size(728, 481);
             this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem2.TextVisible = false;
             // 
-            // btnPushAll
+            // txtLocalNugetUrl
             // 
-            this.btnPushAll.Caption = "Push All";
-            this.btnPushAll.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnPushAll.ImageOptions.Image")));
-            this.btnPushAll.Name = "btnPushAll";
-            this.btnPushAll.ElementClick += new DevExpress.XtraBars.Navigation.NavElementClickEventHandler(this.btnPushAll_ElementClick);
+            this.txtLocalNugetUrl.EditValue = "http://localhost:5000/v3/index.json";
+            this.txtLocalNugetUrl.Location = new System.Drawing.Point(162, 58);
+            this.txtLocalNugetUrl.Name = "txtLocalNugetUrl";
+            this.txtLocalNugetUrl.Size = new System.Drawing.Size(571, 24);
+            this.txtLocalNugetUrl.StyleController = this.dlyDetail;
+            this.txtLocalNugetUrl.TabIndex = 14;
+            // 
+            // layoutControlItem3
+            // 
+            this.layoutControlItem3.Control = this.txtLocalNugetUrl;
+            this.layoutControlItem3.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlItem3.Name = "layoutControlItem3";
+            this.layoutControlItem3.Padding = new DevExpress.XtraLayout.Utils.Padding(5, 5, 5, 5);
+            this.layoutControlItem3.Size = new System.Drawing.Size(716, 34);
+            this.layoutControlItem3.Text = "Local Nuget Server";
+            this.layoutControlItem3.TextSize = new System.Drawing.Size(132, 18);
+            // 
+            // txtApiKey
+            // 
+            this.txtApiKey.EditValue = "1234567890";
+            this.txtApiKey.Location = new System.Drawing.Point(878, 58);
+            this.txtApiKey.Name = "txtApiKey";
+            this.txtApiKey.Size = new System.Drawing.Size(571, 24);
+            this.txtApiKey.StyleController = this.dlyDetail;
+            this.txtApiKey.TabIndex = 15;
+            // 
+            // layoutControlItem4
+            // 
+            this.layoutControlItem4.Control = this.txtApiKey;
+            this.layoutControlItem4.Location = new System.Drawing.Point(716, 0);
+            this.layoutControlItem4.Name = "layoutControlItem4";
+            this.layoutControlItem4.Padding = new DevExpress.XtraLayout.Utils.Padding(5, 5, 5, 5);
+            this.layoutControlItem4.Size = new System.Drawing.Size(716, 34);
+            this.layoutControlItem4.Text = "ApiKey";
+            this.layoutControlItem4.TextSize = new System.Drawing.Size(132, 18);
             // 
             // FrmPackageDetail
             // 
@@ -464,6 +514,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.ItemForAuthors)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemForVersion)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtLocalNugetUrl.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtApiKey.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -502,5 +556,9 @@
         private DevExpress.XtraLayout.LayoutControlItem ItemForVersion;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
         private DevExpress.XtraBars.Navigation.NavButton btnPushAll;
+        private DevExpress.XtraEditors.TextEdit txtLocalNugetUrl;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
+        private DevExpress.XtraEditors.TextEdit txtApiKey;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
     }
 }

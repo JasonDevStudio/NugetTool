@@ -20,6 +20,9 @@ namespace NuigetTool
     {
         public PackageMetadata Package { get; set; }
 
+        private string localNugetServer = "";
+        private string apiKey = "";
+
         public FrmPackageDetail()
         {
             InitializeComponent();
@@ -244,7 +247,7 @@ namespace NuigetTool
 
             foreach (var item in files)
             {
-                var pushCmd = $"\"{nugetPaht}\" push -Source http://localhost:5000/v3/index.json \"{item}\" -ApiKey 1234567890";
+                var pushCmd = $"\"{nugetPaht}\" push -Source {localNugetServer} \"{item}\" -ApiKey {apiKey}";
                 process.StandardInput.WriteLine(pushCmd);
             }
 
@@ -256,11 +259,15 @@ namespace NuigetTool
 
         private void BtnPush_ElementClick(object sender, DevExpress.XtraBars.Navigation.NavElementEventArgs e)
         {
+            localNugetServer = this.txtLocalNugetUrl.EditValue.ToString();
+            apiKey = this.txtApiKey.EditValue.ToString();
             Task.Factory.StartNew(() => Download()); 
         }
 
         private void btnPushAll_ElementClick(object sender, DevExpress.XtraBars.Navigation.NavElementEventArgs e)
         {
+            localNugetServer = this.txtLocalNugetUrl.EditValue.ToString();
+            apiKey = this.txtApiKey.EditValue.ToString();
             Task.Factory.StartNew(() => DownloadAll());
         }
     }
