@@ -5,3 +5,8 @@
 /.vs
 /NuigetTool/packages
 /NuigetTool/.vs/NuigetTool/v16
+bin/*
+obj/*
+/NuigetTool/NuigetTool/bin
+/NuigetTool/NuigetTool/obj
+

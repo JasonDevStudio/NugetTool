@@ -92,5 +92,10 @@ namespace NuigetTool
                 this.Search();
             }
         }
+
+        private void btnPush_ElementClick(object sender, DevExpress.XtraBars.Navigation.NavElementEventArgs e)
+        {
+
+        }
     }
 }
