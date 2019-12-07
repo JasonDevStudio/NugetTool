@@ -24,7 +24,7 @@ namespace NuigetTool
         public void SetData(PackageMetadata package)
         {
             this.Package = package;
-            this.proMain.SelectedObject = this.Package;
+            this.dlyDetail.DataSource = this.Package;
             this.grdDependencies.DataSource = this.Package.DependencyGroups;
 
             for (int i = 0; i < this.grvDependencies.RowCount; i++)

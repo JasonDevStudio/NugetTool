@@ -1,6 +1,7 @@
 ﻿using BaGet.Protocol;
 using BaGet.Protocol.Models;
 using DevExpress.XtraBars;
+using NuGet.Versioning;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -31,25 +32,30 @@ namespace NuigetTool
         private void btnDetail_ElementClick(object sender, DevExpress.XtraBars.Navigation.NavElementEventArgs e)
         {
             var result = this.grvPackages.GetFocusedRow() as SearchResult;
-            var client = new NuGetClient("https://api.nuget.org/v3/index.json");
-            var results = Task.Factory.StartNew(() => client.GetPackageMetadataAsync(result.PackageId).Result).Result;
-            this.grdDetails.DataSource = results;
+            this.grdVersions.DataSource = result.Versions;
         }
 
         private void btnOpen_ElementClick(object sender, DevExpress.XtraBars.Navigation.NavElementEventArgs e)
         {
-            var result = this.grvDetails.GetFocusedRow() as PackageMetadata;
+            var result = this.grvPackages.GetFocusedRow() as SearchResult;
+            var version = this.grvVersions.GetFocusedRow() as NuGetVersion;
+            var client = new NuGetClient("https://api.nuget.org/v3/index.json");
+            var package = Task.Factory.StartNew(() => client.GetPackageMetadataAsync(result.PackageId, version).Result).Result;
+             
             var frm = new FrmPackageDetail();
-            frm.SetData(result);
+            frm.SetData(package);
             frm.Show();
         }
 
         private void grvPackages_RowClick(object sender, DevExpress.XtraGrid.Views.Grid.RowClickEventArgs e)
         {
+            //var result = this.grvPackages.GetFocusedRow() as SearchResult;
+            //var client = new NuGetClient("https://api.nuget.org/v3/index.json");
+            //var versions = Task.Factory.StartNew(() => client.ListPackageVersionsAsync(result.PackageId,default).Result).Result;
+            //this.grdVersions.DataSource = versions;
+
             var result = this.grvPackages.GetFocusedRow() as SearchResult;
-            var client = new NuGetClient("https://api.nuget.org/v3/index.json");
-            var results = Task.Factory.StartNew(() => client.GetPackageMetadataAsync(result.PackageId).Result).Result;
-            this.grdDetails.DataSource = results;
+            var versions = result.Versions;
         }
     }
 }

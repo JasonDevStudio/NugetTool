@@ -32,28 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmNuGetTool));
             this.fluentDesignFormContainer1 = new DevExpress.XtraBars.FluentDesignSystem.FluentDesignFormContainer();
             this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
-            this.grdDetails = new DevExpress.XtraGrid.GridControl();
             this.packageMetadataBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.grvDetails = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.colCatalogLeafUrl = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colPackageId1 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colVersion1 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colAuthors1 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colDescription1 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colIconUrl1 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colLanguage = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colLicenseUrl1 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colListed = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colMinClientVersion = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colPackageContentUrl = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colProjectUrl1 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colPublished = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colRequireLicenseAcceptance = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colSummary1 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colTags1 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colTitle1 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colDependencyGroups = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.txtVersion = new DevExpress.XtraEditors.TextEdit();
             this.grdPackages = new DevExpress.XtraGrid.GridControl();
             this.searchResultBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.grvPackages = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -74,22 +53,23 @@
             this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlGroup2 = new DevExpress.XtraLayout.LayoutControlGroup();
-            this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
             this.tnpMain = new DevExpress.XtraBars.Navigation.TileNavPane();
             this.btnSearch = new DevExpress.XtraBars.Navigation.NavButton();
             this.btnDetail = new DevExpress.XtraBars.Navigation.NavButton();
             this.btnOpen = new DevExpress.XtraBars.Navigation.NavButton();
             this.fluentDesignFormControl1 = new DevExpress.XtraBars.FluentDesignSystem.FluentDesignFormControl();
+            this.grdVersions = new DevExpress.XtraGrid.GridControl();
+            this.grvVersions = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.searchResultVersionBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.colRegistrationLeafUrl = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colVersion1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colDownloads = new DevExpress.XtraGrid.Columns.GridColumn();
             this.fluentDesignFormContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.grdDetails)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.packageMetadataBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.grvDetails)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtVersion.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdPackages)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.searchResultBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grvPackages)).BeginInit();
@@ -97,12 +77,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.Root)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tnpMain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fluentDesignFormControl1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grdVersions)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grvVersions)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.searchResultVersionBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // fluentDesignFormContainer1
@@ -117,8 +98,7 @@
             // 
             // layoutControl1
             // 
-            this.layoutControl1.Controls.Add(this.grdDetails);
-            this.layoutControl1.Controls.Add(this.txtVersion);
+            this.layoutControl1.Controls.Add(this.grdVersions);
             this.layoutControl1.Controls.Add(this.grdPackages);
             this.layoutControl1.Controls.Add(this.txtKeys);
             this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -130,201 +110,9 @@
             this.layoutControl1.TabIndex = 1;
             this.layoutControl1.Text = "layoutControl1";
             // 
-            // grdDetails
-            // 
-            this.grdDetails.DataSource = this.packageMetadataBindingSource;
-            this.grdDetails.Location = new System.Drawing.Point(24, 512);
-            this.grdDetails.MainView = this.grvDetails;
-            this.grdDetails.Name = "grdDetails";
-            this.grdDetails.Size = new System.Drawing.Size(1318, 234);
-            this.grdDetails.TabIndex = 7;
-            this.grdDetails.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            this.grvDetails});
-            // 
             // packageMetadataBindingSource
             // 
             this.packageMetadataBindingSource.DataSource = typeof(BaGet.Protocol.Models.PackageMetadata);
-            // 
-            // grvDetails
-            // 
-            this.grvDetails.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
-            this.colCatalogLeafUrl,
-            this.colPackageId1,
-            this.colVersion1,
-            this.colAuthors1,
-            this.colDescription1,
-            this.colIconUrl1,
-            this.colLanguage,
-            this.colLicenseUrl1,
-            this.colListed,
-            this.colMinClientVersion,
-            this.colPackageContentUrl,
-            this.colProjectUrl1,
-            this.colPublished,
-            this.colRequireLicenseAcceptance,
-            this.colSummary1,
-            this.colTags1,
-            this.colTitle1,
-            this.colDependencyGroups});
-            this.grvDetails.GridControl = this.grdDetails;
-            this.grvDetails.Name = "grvDetails";
-            this.grvDetails.OptionsBehavior.Editable = false;
-            this.grvDetails.OptionsFind.AlwaysVisible = true;
-            this.grvDetails.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
-            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colTitle1, DevExpress.Data.ColumnSortOrder.Descending),
-            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colVersion1, DevExpress.Data.ColumnSortOrder.Descending)});
-            // 
-            // colCatalogLeafUrl
-            // 
-            this.colCatalogLeafUrl.FieldName = "CatalogLeafUrl";
-            this.colCatalogLeafUrl.MinWidth = 25;
-            this.colCatalogLeafUrl.Name = "colCatalogLeafUrl";
-            this.colCatalogLeafUrl.Width = 94;
-            // 
-            // colPackageId1
-            // 
-            this.colPackageId1.FieldName = "PackageId";
-            this.colPackageId1.MinWidth = 25;
-            this.colPackageId1.Name = "colPackageId1";
-            this.colPackageId1.Visible = true;
-            this.colPackageId1.VisibleIndex = 0;
-            this.colPackageId1.Width = 166;
-            // 
-            // colVersion1
-            // 
-            this.colVersion1.FieldName = "Version";
-            this.colVersion1.MinWidth = 25;
-            this.colVersion1.Name = "colVersion1";
-            this.colVersion1.Visible = true;
-            this.colVersion1.VisibleIndex = 1;
-            this.colVersion1.Width = 166;
-            // 
-            // colAuthors1
-            // 
-            this.colAuthors1.FieldName = "Authors";
-            this.colAuthors1.MinWidth = 25;
-            this.colAuthors1.Name = "colAuthors1";
-            this.colAuthors1.Width = 94;
-            // 
-            // colDescription1
-            // 
-            this.colDescription1.FieldName = "Description";
-            this.colDescription1.MinWidth = 25;
-            this.colDescription1.Name = "colDescription1";
-            this.colDescription1.Visible = true;
-            this.colDescription1.VisibleIndex = 2;
-            this.colDescription1.Width = 166;
-            // 
-            // colIconUrl1
-            // 
-            this.colIconUrl1.FieldName = "IconUrl";
-            this.colIconUrl1.MinWidth = 25;
-            this.colIconUrl1.Name = "colIconUrl1";
-            this.colIconUrl1.Width = 94;
-            // 
-            // colLanguage
-            // 
-            this.colLanguage.FieldName = "Language";
-            this.colLanguage.MinWidth = 25;
-            this.colLanguage.Name = "colLanguage";
-            this.colLanguage.Visible = true;
-            this.colLanguage.VisibleIndex = 3;
-            this.colLanguage.Width = 166;
-            // 
-            // colLicenseUrl1
-            // 
-            this.colLicenseUrl1.FieldName = "LicenseUrl";
-            this.colLicenseUrl1.MinWidth = 25;
-            this.colLicenseUrl1.Name = "colLicenseUrl1";
-            this.colLicenseUrl1.Width = 94;
-            // 
-            // colListed
-            // 
-            this.colListed.FieldName = "Listed";
-            this.colListed.MinWidth = 25;
-            this.colListed.Name = "colListed";
-            this.colListed.Width = 94;
-            // 
-            // colMinClientVersion
-            // 
-            this.colMinClientVersion.FieldName = "MinClientVersion";
-            this.colMinClientVersion.MinWidth = 25;
-            this.colMinClientVersion.Name = "colMinClientVersion";
-            this.colMinClientVersion.Width = 166;
-            // 
-            // colPackageContentUrl
-            // 
-            this.colPackageContentUrl.FieldName = "PackageContentUrl";
-            this.colPackageContentUrl.MinWidth = 25;
-            this.colPackageContentUrl.Name = "colPackageContentUrl";
-            this.colPackageContentUrl.Visible = true;
-            this.colPackageContentUrl.VisibleIndex = 4;
-            this.colPackageContentUrl.Width = 166;
-            // 
-            // colProjectUrl1
-            // 
-            this.colProjectUrl1.FieldName = "ProjectUrl";
-            this.colProjectUrl1.MinWidth = 25;
-            this.colProjectUrl1.Name = "colProjectUrl1";
-            this.colProjectUrl1.Visible = true;
-            this.colProjectUrl1.VisibleIndex = 5;
-            this.colProjectUrl1.Width = 166;
-            // 
-            // colPublished
-            // 
-            this.colPublished.FieldName = "Published";
-            this.colPublished.MinWidth = 25;
-            this.colPublished.Name = "colPublished";
-            this.colPublished.Visible = true;
-            this.colPublished.VisibleIndex = 6;
-            this.colPublished.Width = 196;
-            // 
-            // colRequireLicenseAcceptance
-            // 
-            this.colRequireLicenseAcceptance.FieldName = "RequireLicenseAcceptance";
-            this.colRequireLicenseAcceptance.MinWidth = 25;
-            this.colRequireLicenseAcceptance.Name = "colRequireLicenseAcceptance";
-            this.colRequireLicenseAcceptance.Width = 160;
-            // 
-            // colSummary1
-            // 
-            this.colSummary1.FieldName = "Summary";
-            this.colSummary1.MinWidth = 25;
-            this.colSummary1.Name = "colSummary1";
-            this.colSummary1.Visible = true;
-            this.colSummary1.VisibleIndex = 7;
-            this.colSummary1.Width = 160;
-            // 
-            // colTags1
-            // 
-            this.colTags1.FieldName = "Tags";
-            this.colTags1.MinWidth = 25;
-            this.colTags1.Name = "colTags1";
-            this.colTags1.Visible = true;
-            this.colTags1.VisibleIndex = 8;
-            this.colTags1.Width = 160;
-            // 
-            // colTitle1
-            // 
-            this.colTitle1.FieldName = "Title";
-            this.colTitle1.MinWidth = 25;
-            this.colTitle1.Name = "colTitle1";
-            this.colTitle1.Width = 160;
-            // 
-            // colDependencyGroups
-            // 
-            this.colDependencyGroups.FieldName = "DependencyGroups";
-            this.colDependencyGroups.MinWidth = 25;
-            this.colDependencyGroups.Name = "colDependencyGroups";
-            this.colDependencyGroups.Width = 166;
-            // 
-            // txtVersion
-            // 
-            this.txtVersion.Location = new System.Drawing.Point(1079, 58);
-            this.txtVersion.Name = "txtVersion";
-            this.txtVersion.Size = new System.Drawing.Size(260, 24);
-            this.txtVersion.StyleController = this.layoutControl1;
-            this.txtVersion.TabIndex = 6;
             // 
             // grdPackages
             // 
@@ -332,7 +120,7 @@
             this.grdPackages.Location = new System.Drawing.Point(24, 89);
             this.grdPackages.MainView = this.grvPackages;
             this.grdPackages.Name = "grdPackages";
-            this.grdPackages.Size = new System.Drawing.Size(1318, 364);
+            this.grdPackages.Size = new System.Drawing.Size(1069, 657);
             this.grdPackages.TabIndex = 5;
             this.grdPackages.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.grvPackages});
@@ -474,7 +262,7 @@
             // 
             this.txtKeys.Location = new System.Drawing.Point(116, 58);
             this.txtKeys.Name = "txtKeys";
-            this.txtKeys.Size = new System.Drawing.Size(864, 24);
+            this.txtKeys.Size = new System.Drawing.Size(1223, 24);
             this.txtKeys.StyleController = this.layoutControl1;
             this.txtKeys.TabIndex = 4;
             // 
@@ -483,8 +271,7 @@
             this.Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
             this.Root.GroupBordersVisible = false;
             this.Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.layoutControlGroup1,
-            this.layoutControlGroup2});
+            this.layoutControlGroup1});
             this.Root.Name = "Root";
             this.Root.Size = new System.Drawing.Size(1366, 770);
             this.Root.TextVisible = false;
@@ -493,11 +280,11 @@
             // 
             this.layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.layoutControlItem1,
-            this.layoutControlItem3,
-            this.layoutControlItem2});
+            this.layoutControlItem2,
+            this.layoutControlItem3});
             this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
             this.layoutControlGroup1.Name = "layoutControlGroup1";
-            this.layoutControlGroup1.Size = new System.Drawing.Size(1346, 457);
+            this.layoutControlGroup1.Size = new System.Drawing.Size(1346, 750);
             this.layoutControlGroup1.Text = "Search";
             // 
             // layoutControlItem1
@@ -506,46 +293,18 @@
             this.layoutControlItem1.Location = new System.Drawing.Point(0, 0);
             this.layoutControlItem1.Name = "layoutControlItem1";
             this.layoutControlItem1.Padding = new DevExpress.XtraLayout.Utils.Padding(5, 5, 5, 5);
-            this.layoutControlItem1.Size = new System.Drawing.Size(963, 34);
+            this.layoutControlItem1.Size = new System.Drawing.Size(1322, 34);
             this.layoutControlItem1.Text = "Search Keys:";
             this.layoutControlItem1.TextSize = new System.Drawing.Size(86, 18);
-            // 
-            // layoutControlItem3
-            // 
-            this.layoutControlItem3.Control = this.txtVersion;
-            this.layoutControlItem3.Location = new System.Drawing.Point(963, 0);
-            this.layoutControlItem3.Name = "layoutControlItem3";
-            this.layoutControlItem3.Padding = new DevExpress.XtraLayout.Utils.Padding(5, 5, 5, 5);
-            this.layoutControlItem3.Size = new System.Drawing.Size(359, 34);
-            this.layoutControlItem3.Text = "Version";
-            this.layoutControlItem3.TextSize = new System.Drawing.Size(86, 18);
             // 
             // layoutControlItem2
             // 
             this.layoutControlItem2.Control = this.grdPackages;
             this.layoutControlItem2.Location = new System.Drawing.Point(0, 34);
             this.layoutControlItem2.Name = "layoutControlItem2";
-            this.layoutControlItem2.Size = new System.Drawing.Size(1322, 368);
+            this.layoutControlItem2.Size = new System.Drawing.Size(1073, 661);
             this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem2.TextVisible = false;
-            // 
-            // layoutControlGroup2
-            // 
-            this.layoutControlGroup2.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.layoutControlItem4});
-            this.layoutControlGroup2.Location = new System.Drawing.Point(0, 457);
-            this.layoutControlGroup2.Name = "layoutControlGroup2";
-            this.layoutControlGroup2.Size = new System.Drawing.Size(1346, 293);
-            this.layoutControlGroup2.Text = "Details";
-            // 
-            // layoutControlItem4
-            // 
-            this.layoutControlItem4.Control = this.grdDetails;
-            this.layoutControlItem4.Location = new System.Drawing.Point(0, 0);
-            this.layoutControlItem4.Name = "layoutControlItem4";
-            this.layoutControlItem4.Size = new System.Drawing.Size(1322, 238);
-            this.layoutControlItem4.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem4.TextVisible = false;
             // 
             // tnpMain
             // 
@@ -597,6 +356,63 @@
             this.fluentDesignFormControl1.TabIndex = 2;
             this.fluentDesignFormControl1.TabStop = false;
             // 
+            // grdVersions
+            // 
+            this.grdVersions.DataSource = this.searchResultVersionBindingSource;
+            this.grdVersions.Location = new System.Drawing.Point(1097, 89);
+            this.grdVersions.MainView = this.grvVersions;
+            this.grdVersions.Name = "grdVersions";
+            this.grdVersions.Size = new System.Drawing.Size(245, 657);
+            this.grdVersions.TabIndex = 8;
+            this.grdVersions.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.grvVersions});
+            // 
+            // grvVersions
+            // 
+            this.grvVersions.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.colRegistrationLeafUrl,
+            this.colVersion1,
+            this.colDownloads});
+            this.grvVersions.GridControl = this.grdVersions;
+            this.grvVersions.Name = "grvVersions";
+            this.grvVersions.OptionsBehavior.Editable = false;
+            // 
+            // layoutControlItem3
+            // 
+            this.layoutControlItem3.Control = this.grdVersions;
+            this.layoutControlItem3.Location = new System.Drawing.Point(1073, 34);
+            this.layoutControlItem3.Name = "layoutControlItem3";
+            this.layoutControlItem3.Size = new System.Drawing.Size(249, 661);
+            this.layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItem3.TextVisible = false;
+            // 
+            // searchResultVersionBindingSource
+            // 
+            this.searchResultVersionBindingSource.DataSource = typeof(BaGet.Protocol.Models.SearchResultVersion);
+            // 
+            // colRegistrationLeafUrl
+            // 
+            this.colRegistrationLeafUrl.FieldName = "RegistrationLeafUrl";
+            this.colRegistrationLeafUrl.MinWidth = 25;
+            this.colRegistrationLeafUrl.Name = "colRegistrationLeafUrl";
+            this.colRegistrationLeafUrl.Width = 94;
+            // 
+            // colVersion1
+            // 
+            this.colVersion1.FieldName = "Version";
+            this.colVersion1.MinWidth = 25;
+            this.colVersion1.Name = "colVersion1";
+            this.colVersion1.Visible = true;
+            this.colVersion1.VisibleIndex = 0;
+            this.colVersion1.Width = 94;
+            // 
+            // colDownloads
+            // 
+            this.colDownloads.FieldName = "Downloads";
+            this.colDownloads.MinWidth = 25;
+            this.colDownloads.Name = "colDownloads";
+            this.colDownloads.Width = 94;
+            // 
             // FrmNuGetTool
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
@@ -612,10 +428,7 @@
             this.fluentDesignFormContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
             this.layoutControl1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.grdDetails)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.packageMetadataBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.grvDetails)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtVersion.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdPackages)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.searchResultBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grvPackages)).EndInit();
@@ -623,12 +436,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.Root)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tnpMain)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fluentDesignFormControl1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grdVersions)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grvVersions)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.searchResultVersionBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -647,13 +461,7 @@
         private DevExpress.XtraGrid.GridControl grdPackages;
         private DevExpress.XtraGrid.Views.Grid.GridView grvPackages;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
-        private DevExpress.XtraEditors.TextEdit txtVersion;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
-        private DevExpress.XtraGrid.GridControl grdDetails;
-        private DevExpress.XtraGrid.Views.Grid.GridView grvDetails;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
         private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
-        private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup2;
         private System.Windows.Forms.BindingSource searchResultBindingSource;
         private DevExpress.XtraGrid.Columns.GridColumn colPackageId;
         private DevExpress.XtraGrid.Columns.GridColumn colVersion;
@@ -669,24 +477,13 @@
         private DevExpress.XtraGrid.Columns.GridColumn colTotalDownloads;
         private DevExpress.XtraGrid.Columns.GridColumn colVersions;
         private System.Windows.Forms.BindingSource packageMetadataBindingSource;
-        private DevExpress.XtraGrid.Columns.GridColumn colCatalogLeafUrl;
-        private DevExpress.XtraGrid.Columns.GridColumn colPackageId1;
+        private DevExpress.XtraGrid.GridControl grdVersions;
+        private DevExpress.XtraGrid.Views.Grid.GridView grvVersions;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
+        private System.Windows.Forms.BindingSource searchResultVersionBindingSource;
+        private DevExpress.XtraGrid.Columns.GridColumn colRegistrationLeafUrl;
         private DevExpress.XtraGrid.Columns.GridColumn colVersion1;
-        private DevExpress.XtraGrid.Columns.GridColumn colAuthors1;
-        private DevExpress.XtraGrid.Columns.GridColumn colDescription1;
-        private DevExpress.XtraGrid.Columns.GridColumn colIconUrl1;
-        private DevExpress.XtraGrid.Columns.GridColumn colLanguage;
-        private DevExpress.XtraGrid.Columns.GridColumn colLicenseUrl1;
-        private DevExpress.XtraGrid.Columns.GridColumn colListed;
-        private DevExpress.XtraGrid.Columns.GridColumn colMinClientVersion;
-        private DevExpress.XtraGrid.Columns.GridColumn colPackageContentUrl;
-        private DevExpress.XtraGrid.Columns.GridColumn colProjectUrl1;
-        private DevExpress.XtraGrid.Columns.GridColumn colPublished;
-        private DevExpress.XtraGrid.Columns.GridColumn colRequireLicenseAcceptance;
-        private DevExpress.XtraGrid.Columns.GridColumn colSummary1;
-        private DevExpress.XtraGrid.Columns.GridColumn colTags1;
-        private DevExpress.XtraGrid.Columns.GridColumn colTitle1;
-        private DevExpress.XtraGrid.Columns.GridColumn colDependencyGroups;
+        private DevExpress.XtraGrid.Columns.GridColumn colDownloads;
     }
 }
 

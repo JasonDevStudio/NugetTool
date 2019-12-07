@@ -128,6 +128,7 @@
     <None Include="Properties\DataSources\BaGet.Protocol.Models.DependencyGroupItem.datasource" />
     <None Include="Properties\DataSources\BaGet.Protocol.Models.PackageMetadata.datasource" />
     <None Include="Properties\DataSources\BaGet.Protocol.Models.SearchResult.datasource" />
+    <None Include="Properties\DataSources\BaGet.Protocol.Models.SearchResultVersion.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
