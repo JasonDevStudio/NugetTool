@@ -33,7 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BaGet.Protocol, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\BaGet.Protocol.0.2.0-preview1\lib\netstandard2.0\BaGet.Protocol.dll</HintPath>
+      <HintPath>..\packages\BaGet.Protocol.0.2.0-master-1047\lib\netstandard2.0\BaGet.Protocol.dll</HintPath>
     </Reference>
     <Reference Include="DevExpress.BonusSkins.v19.2" />
     <Reference Include="DevExpress.Data.v19.2" />

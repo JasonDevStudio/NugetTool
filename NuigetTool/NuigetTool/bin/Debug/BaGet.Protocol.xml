@@ -4,109 +4,68 @@
         <name>BaGet.Protocol</name>
     </assembly>
     <members>
-        <member name="T:BaGet.Protocol.Internal.BaseCatalogLeafConverter">
+        <member name="T:BaGet.Protocol.NuGetClientFactory">
             <summary>
-            Based off: https://github.com/NuGet/NuGet.Services.Metadata/blob/64af0b59c5a79e0143f0808b39946df9f16cb2e7/src/NuGet.Protocol.Catalog/Serialization/BaseCatalogLeafConverter.cs
+            The <see cref="T:BaGet.Protocol.NuGetClientFactory"/> creates clients to interact with a NuGet server.
+            Use this for advanced scenarios. For most scenarios, consider using <see cref="T:BaGet.Protocol.NuGetClient"/> instead.
             </summary>
         </member>
-        <member name="T:BaGet.Protocol.Internal.CatalogLeafItemTypeConverter">
+        <member name="M:BaGet.Protocol.NuGetClientFactory.#ctor">
             <summary>
-            Based off: https://github.com/NuGet/NuGet.Services.Metadata/blob/64af0b59c5a79e0143f0808b39946df9f16cb2e7/src/NuGet.Protocol.Catalog/Serialization/CatalogLeafItemTypeConverter.cs
+            Initializes a new instance of the <see cref="T:BaGet.Protocol.NuGetClientFactory"/> class
+            for mocking.
             </summary>
         </member>
-        <member name="T:BaGet.Protocol.Internal.CatalogLeafTypeConverter">
-            <summary>
-            Based off: https://github.com/NuGet/NuGet.Services.Metadata/blob/64af0b59c5a79e0143f0808b39946df9f16cb2e7/src/NuGet.Protocol.Catalog/Serialization/CatalogLeafTypeConverter.cs
-            </summary>
-        </member>
-        <member name="T:BaGet.Protocol.Internal.SingleOrListConverter`1">
-            <summary>
-            Converts a single value or a list of values into the desired type or <see cref="T:System.Collections.Generic.List`1"/>.
-            </summary>
-            <typeparam name="T">The desired type.</typeparam>
-        </member>
-        <member name="M:BaGet.Protocol.Internal.SingleOrListConverter`1.CanConvert(System.Type)">
-            <inheritdoc />
-        </member>
-        <member name="M:BaGet.Protocol.Internal.SingleOrListConverter`1.ReadJson(Newtonsoft.Json.JsonReader,System.Type,System.Object,Newtonsoft.Json.JsonSerializer)">
-            <inheritdoc />
-        </member>
-        <member name="M:BaGet.Protocol.Internal.SingleOrListConverter`1.WriteJson(Newtonsoft.Json.JsonWriter,System.Object,Newtonsoft.Json.JsonSerializer)">
-            <inheritdoc />
-        </member>
-        <member name="T:BaGet.Protocol.Internal.RawPackageContentClient">
-            <summary>
-            The client to interact with an upstream source's Package Content resource.
-            </summary>
-        </member>
-        <member name="M:BaGet.Protocol.Internal.RawPackageContentClient.#ctor(System.Net.Http.HttpClient,System.String)">
-            <summary>
-            Create a new Package Content client.
-            </summary>
-            <param name="httpClient">The HTTP client used to send requests.</param>
-            <param name="packageContentUrl">The NuGet Server's package content URL.</param>
-        </member>
-        <member name="M:BaGet.Protocol.Internal.RawPackageContentClient.GetPackageVersionsOrNullAsync(System.String,System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BaGet.Protocol.Internal.RawPackageContentClient.GetPackageContentStreamOrNullAsync(System.String,NuGet.Versioning.NuGetVersion,System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BaGet.Protocol.Internal.RawPackageContentClient.GetPackageManifestStreamOrNullAsync(System.String,NuGet.Versioning.NuGetVersion,System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="T:BaGet.Protocol.Internal.RawPackageMetadataClient">
-            <summary>
-            The client to interact with an upstream source's Package Metadata resource.
-            </summary>
-        </member>
-        <member name="M:BaGet.Protocol.Internal.RawPackageMetadataClient.#ctor(System.Net.Http.HttpClient,System.String)">
-            <summary>
-            Create a new Package Metadata client.
-            </summary>
-            <param name="httpClient">The HTTP client used to send requests.</param>
-            <param name="registrationBaseUrl">The NuGet server's registration resource URL.</param>
-        </member>
-        <member name="M:BaGet.Protocol.Internal.RawPackageMetadataClient.GetRegistrationIndexOrNullAsync(System.String,System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BaGet.Protocol.Internal.RawPackageMetadataClient.GetRegistrationPageAsync(System.String,System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="M:BaGet.Protocol.Internal.RawPackageMetadataClient.GetRegistrationLeafOrNullAsync(System.String,NuGet.Versioning.NuGetVersion,System.Threading.CancellationToken)">
-            <inheritdoc />
-        </member>
-        <member name="T:BaGet.Protocol.Internal.RawSearchClient">
-            <summary>
-            The client used to search for packages.
+        <member name="M:BaGet.Protocol.NuGetClientFactory.#ctor(System.Net.Http.HttpClient,System.String)">
+             <summary>
+             Initializes a new instance of the <see cref="T:BaGet.Protocol.NuGetClientFactory"/> class.
+             </summary>
+             <param name="httpClient">The client used for HTTP requests.</param>
+             <param name="serviceIndexUrl">
+             The NuGet Service Index resource URL.
             
-            See https://docs.microsoft.com/en-us/nuget/api/search-query-service-resource
-            </summary>
+             For NuGet.org, use https://api.nuget.org/v3/index.json
+             </param>
         </member>
-        <member name="M:BaGet.Protocol.Internal.RawSearchClient.#ctor(System.Net.Http.HttpClient,System.String,System.String)">
+        <member name="M:BaGet.Protocol.NuGetClientFactory.CreateServiceIndexClient">
             <summary>
-            Create a new Search client.
-            </summary>
-            <param name="httpClient">The HTTP client used to send requests.</param>
-            <param name="searchUrl">The NuGet server's search URL.</param>
-            <param name="autocompleteUrl">The NuGet server's autocomplete URL.</param>
-        </member>
-        <member name="T:BaGet.Protocol.Internal.ServiceIndexClient">
-            <summary>
-            The NuGet Service Index client, used to discover other resources.
+            Create a client to interact with the NuGet Service Index resource.
             
             See https://docs.microsoft.com/en-us/nuget/api/service-index
             </summary>
+            <returns>A client to interact with the NuGet Service Index resource.</returns>
         </member>
-        <member name="M:BaGet.Protocol.Internal.ServiceIndexClient.#ctor(System.Net.Http.HttpClient,System.String)">
+        <member name="M:BaGet.Protocol.NuGetClientFactory.CreatePackageContentClient">
+             <summary>
+             Create a client to interact with the NuGet Package Content resource.
+            
+             See https://docs.microsoft.com/en-us/nuget/api/package-base-address-resource
+             </summary>
+             <returns>A client to interact with the NuGet Package Content resource.</returns>
+        </member>
+        <member name="M:BaGet.Protocol.NuGetClientFactory.CreatePackageMetadataClient">
             <summary>
-            Create a service index for the upstream source.
+            Create a client to interact with the NuGet Package Metadata resource.
+            
+            See https://docs.microsoft.com/en-us/nuget/api/registration-base-url-resource
             </summary>
-            <param name="httpClient">The HTTP client used to send requests.</param>
-            <param name="serviceIndexUrl">The NuGet server's service index URL.</param>
+            <returns>A client to interact with the NuGet Package Metadata resource.</returns>
         </member>
-        <member name="M:BaGet.Protocol.Internal.ServiceIndexClient.GetAsync(System.Threading.CancellationToken)">
-            <inheritdoc />
+        <member name="M:BaGet.Protocol.NuGetClientFactory.CreateSearchClient">
+            <summary>
+            Create a client to interact with the NuGet Search resource.
+            
+            See https://docs.microsoft.com/en-us/nuget/api/search-query-service-resource
+            </summary>
+            <returns>A client to interact with the NuGet Search resource.</returns>
+        </member>
+        <member name="M:BaGet.Protocol.NuGetClientFactory.CreateCatalogClient">
+            <summary>
+            Create a client to interact with the NuGet catalog resource.
+            
+            See https://docs.microsoft.com/en-us/nuget/api/catalog-resource
+            </summary>
+            <returns>A client to interact with the Catalog resource.</returns>
         </member>
         <member name="T:BaGet.Protocol.Catalog.CatalogProcessor">
             <summary>
@@ -274,6 +233,110 @@
             <param name="cancellationToken">A token to cancel the task.</param>
             <returns>A catalog leaf.</returns>
         </member>
+        <member name="T:BaGet.Protocol.Internal.BaseCatalogLeafConverter">
+            <summary>
+            Based off: https://github.com/NuGet/NuGet.Services.Metadata/blob/64af0b59c5a79e0143f0808b39946df9f16cb2e7/src/NuGet.Protocol.Catalog/Serialization/BaseCatalogLeafConverter.cs
+            </summary>
+        </member>
+        <member name="T:BaGet.Protocol.Internal.CatalogLeafItemTypeConverter">
+            <summary>
+            Based off: https://github.com/NuGet/NuGet.Services.Metadata/blob/64af0b59c5a79e0143f0808b39946df9f16cb2e7/src/NuGet.Protocol.Catalog/Serialization/CatalogLeafItemTypeConverter.cs
+            </summary>
+        </member>
+        <member name="T:BaGet.Protocol.Internal.CatalogLeafTypeConverter">
+            <summary>
+            Based off: https://github.com/NuGet/NuGet.Services.Metadata/blob/64af0b59c5a79e0143f0808b39946df9f16cb2e7/src/NuGet.Protocol.Catalog/Serialization/CatalogLeafTypeConverter.cs
+            </summary>
+        </member>
+        <member name="T:BaGet.Protocol.Internal.SingleOrListConverter`1">
+            <summary>
+            Converts a single value or a list of values into the desired type or <see cref="T:System.Collections.Generic.List`1"/>.
+            </summary>
+            <typeparam name="T">The desired type.</typeparam>
+        </member>
+        <member name="M:BaGet.Protocol.Internal.SingleOrListConverter`1.CanConvert(System.Type)">
+            <inheritdoc />
+        </member>
+        <member name="M:BaGet.Protocol.Internal.SingleOrListConverter`1.ReadJson(Newtonsoft.Json.JsonReader,System.Type,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <inheritdoc />
+        </member>
+        <member name="M:BaGet.Protocol.Internal.SingleOrListConverter`1.WriteJson(Newtonsoft.Json.JsonWriter,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <inheritdoc />
+        </member>
+        <member name="T:BaGet.Protocol.Internal.RawPackageContentClient">
+            <summary>
+            The client to interact with an upstream source's Package Content resource.
+            </summary>
+        </member>
+        <member name="M:BaGet.Protocol.Internal.RawPackageContentClient.#ctor(System.Net.Http.HttpClient,System.String)">
+            <summary>
+            Create a new Package Content client.
+            </summary>
+            <param name="httpClient">The HTTP client used to send requests.</param>
+            <param name="packageContentUrl">The NuGet Server's package content URL.</param>
+        </member>
+        <member name="M:BaGet.Protocol.Internal.RawPackageContentClient.GetPackageVersionsOrNullAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BaGet.Protocol.Internal.RawPackageContentClient.GetPackageContentStreamOrNullAsync(System.String,NuGet.Versioning.NuGetVersion,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BaGet.Protocol.Internal.RawPackageContentClient.GetPackageManifestStreamOrNullAsync(System.String,NuGet.Versioning.NuGetVersion,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:BaGet.Protocol.Internal.RawPackageMetadataClient">
+            <summary>
+            The client to interact with an upstream source's Package Metadata resource.
+            </summary>
+        </member>
+        <member name="M:BaGet.Protocol.Internal.RawPackageMetadataClient.#ctor(System.Net.Http.HttpClient,System.String)">
+            <summary>
+            Create a new Package Metadata client.
+            </summary>
+            <param name="httpClient">The HTTP client used to send requests.</param>
+            <param name="registrationBaseUrl">The NuGet server's registration resource URL.</param>
+        </member>
+        <member name="M:BaGet.Protocol.Internal.RawPackageMetadataClient.GetRegistrationIndexOrNullAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BaGet.Protocol.Internal.RawPackageMetadataClient.GetRegistrationPageAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:BaGet.Protocol.Internal.RawPackageMetadataClient.GetRegistrationLeafOrNullAsync(System.String,NuGet.Versioning.NuGetVersion,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:BaGet.Protocol.Internal.RawSearchClient">
+            <summary>
+            The client used to search for packages.
+            
+            See https://docs.microsoft.com/en-us/nuget/api/search-query-service-resource
+            </summary>
+        </member>
+        <member name="M:BaGet.Protocol.Internal.RawSearchClient.#ctor(System.Net.Http.HttpClient,System.String,System.String)">
+            <summary>
+            Create a new Search client.
+            </summary>
+            <param name="httpClient">The HTTP client used to send requests.</param>
+            <param name="searchUrl">The NuGet server's search URL.</param>
+            <param name="autocompleteUrl">The NuGet server's autocomplete URL.</param>
+        </member>
+        <member name="T:BaGet.Protocol.Internal.RawServiceIndexClient">
+            <summary>
+            The NuGet Service Index client, used to discover other resources.
+            
+            See https://docs.microsoft.com/en-us/nuget/api/service-index
+            </summary>
+        </member>
+        <member name="M:BaGet.Protocol.Internal.RawServiceIndexClient.#ctor(System.Net.Http.HttpClient,System.String)">
+            <summary>
+            Create a service index for the upstream source.
+            </summary>
+            <param name="httpClient">The HTTP client used to send requests.</param>
+            <param name="serviceIndexUrl">The NuGet server's service index URL.</param>
+        </member>
+        <member name="M:BaGet.Protocol.Internal.RawServiceIndexClient.GetAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="T:BaGet.Protocol.CatalogModelExtensions">
             <summary>
             These are documented interpretations of values returned by the catalog API.
@@ -349,7 +412,7 @@
             <param name="leaf">The catalog leaf.</param>
             <returns>True if the package is SemVer 2.0.0.</returns>
         </member>
-        <member name="M:BaGet.Protocol.NuGetClientFactoryExtensions.CreateCatalogProcessorAsync(BaGet.Protocol.NuGetClientFactory,BaGet.Protocol.Catalog.ICursor,BaGet.Protocol.Catalog.ICatalogLeafProcessor,BaGet.Protocol.Catalog.CatalogProcessorOptions,Microsoft.Extensions.Logging.ILogger{BaGet.Protocol.Catalog.CatalogProcessor},System.Threading.CancellationToken)">
+        <member name="M:BaGet.Protocol.NuGetClientFactoryExtensions.CreateCatalogProcessor(BaGet.Protocol.NuGetClientFactory,BaGet.Protocol.Catalog.ICursor,BaGet.Protocol.Catalog.ICatalogLeafProcessor,BaGet.Protocol.Catalog.CatalogProcessorOptions,Microsoft.Extensions.Logging.ILogger{BaGet.Protocol.Catalog.CatalogProcessor})">
             <summary>
             Create a new <see cref="T:BaGet.Protocol.Catalog.CatalogProcessor"/> to discover and download catalog leafs.
             Leafs are processed by the <see cref="T:BaGet.Protocol.Catalog.ICatalogLeafProcessor"/>.
@@ -359,7 +422,6 @@
             <param name="leafProcessor">The leaf processor.</param>
             <param name="options">The options to configure catalog processing.</param>
             <param name="logger">The logger used for telemetry.</param>
-            <param name="cancellationToken">A token to cancel the task.</param>
             <returns>The catalog processor.</returns>
         </member>
         <member name="T:BaGet.Protocol.PackageContentModelExtensions">
@@ -798,7 +860,7 @@
             The package's release notes.
             </summary>
         </member>
-        <member name="P:BaGet.Protocol.Models.PackageDetailsCatalogLeaf.RequireLicenseAgreement">
+        <member name="P:BaGet.Protocol.Models.PackageDetailsCatalogLeaf.RequireLicenseAcceptance">
             <summary>
             If true, the package requires its license to be accepted.
             </summary>
@@ -936,6 +998,28 @@
             The dependencies of the package, grouped by target framework.
             </summary>
         </member>
+        <member name="T:BaGet.Protocol.Models.PackageNotFoundException">
+            <summary>
+            An exception thrown when a package could not be found on the NuGet server.
+            </summary>
+        </member>
+        <member name="M:BaGet.Protocol.Models.PackageNotFoundException.#ctor(System.String,NuGet.Versioning.NuGetVersion)">
+            <summary>
+            Create a new instance of the <see cref="T:BaGet.Protocol.Models.PackageNotFoundException"/>.
+            </summary>
+            <param name="packageId">The ID of the package that could not be found.</param>
+            <param name="packageVersion">The version of the package that could not be found.</param>
+        </member>
+        <member name="P:BaGet.Protocol.Models.PackageNotFoundException.PackageId">
+            <summary>
+            The package ID that could not be found.
+            </summary>
+        </member>
+        <member name="P:BaGet.Protocol.Models.PackageNotFoundException.PackageVersion">
+            <summary>
+            The package version that could not be found.
+            </summary>
+        </member>
         <member name="T:BaGet.Protocol.Models.PackageVersionsResponse">
              <summary>
              The full list of versions for a single package.
@@ -946,6 +1030,41 @@
         <member name="P:BaGet.Protocol.Models.PackageVersionsResponse.Versions">
             <summary>
             The versions, lowercased and normalized.
+            </summary>
+        </member>
+        <member name="T:BaGet.Protocol.Models.ProtocolException">
+            <summary>
+            An exception that is thrown when an API has returned an unexpected result.
+            </summary>
+        </member>
+        <member name="M:BaGet.Protocol.Models.ProtocolException.#ctor(System.String,System.Net.Http.HttpMethod,System.String,System.Net.HttpStatusCode,System.String)">
+            <summary>
+            Create a new <see cref="T:BaGet.Protocol.Models.ProtocolException"/>.
+            </summary>
+            <param name="message">The HTTP response message.</param>
+            <param name="method">The HTTP request method.</param>
+            <param name="requestUri">The URI that was requested.</param>
+            <param name="statusCode">The response status code.</param>
+            <param name="reasonPhrase">The HTTP reason phrase.</param>
+        </member>
+        <member name="P:BaGet.Protocol.Models.ProtocolException.Method">
+            <summary>
+            The HTTP response message.
+            </summary>
+        </member>
+        <member name="P:BaGet.Protocol.Models.ProtocolException.RequestUri">
+            <summary>
+            The URI that was requested.
+            </summary>
+        </member>
+        <member name="P:BaGet.Protocol.Models.ProtocolException.StatusCode">
+            <summary>
+            The response status code.
+            </summary>
+        </member>
+        <member name="P:BaGet.Protocol.Models.ProtocolException.ReasonPhrase">
+            <summary>
+            The response reason phrase.
             </summary>
         </member>
         <member name="T:BaGet.Protocol.Models.RegistrationIndexPage">
@@ -1229,63 +1348,6 @@
             The resources declared by this service index.
             </summary>
         </member>
-        <member name="T:BaGet.Protocol.Models.PackageNotFoundException">
-            <summary>
-            An exception thrown when a package could not be found on the NuGet server.
-            </summary>
-        </member>
-        <member name="M:BaGet.Protocol.Models.PackageNotFoundException.#ctor(System.String,NuGet.Versioning.NuGetVersion)">
-            <summary>
-            Create a new instance of the <see cref="T:BaGet.Protocol.Models.PackageNotFoundException"/>.
-            </summary>
-            <param name="packageId">The ID of the package that could not be found.</param>
-            <param name="packageVersion">The version of the package that could not be found.</param>
-        </member>
-        <member name="P:BaGet.Protocol.Models.PackageNotFoundException.PackageId">
-            <summary>
-            The package ID that could not be found.
-            </summary>
-        </member>
-        <member name="P:BaGet.Protocol.Models.PackageNotFoundException.PackageVersion">
-            <summary>
-            The package version that could not be found.
-            </summary>
-        </member>
-        <member name="T:BaGet.Protocol.Models.ProtocolException">
-            <summary>
-            An exception that is thrown when an API has returned an unexpected result.
-            </summary>
-        </member>
-        <member name="M:BaGet.Protocol.Models.ProtocolException.#ctor(System.String,System.Net.Http.HttpMethod,System.String,System.Net.HttpStatusCode,System.String)">
-            <summary>
-            Create a new <see cref="T:BaGet.Protocol.Models.ProtocolException"/>.
-            </summary>
-            <param name="message">The HTTP response message.</param>
-            <param name="method">The HTTP request method.</param>
-            <param name="requestUri">The URI that was requested.</param>
-            <param name="statusCode">The response status code.</param>
-            <param name="reasonPhrase">The HTTP reason phrase.</param>
-        </member>
-        <member name="P:BaGet.Protocol.Models.ProtocolException.Method">
-            <summary>
-            The HTTP response message.
-            </summary>
-        </member>
-        <member name="P:BaGet.Protocol.Models.ProtocolException.RequestUri">
-            <summary>
-            The URI that was requested.
-            </summary>
-        </member>
-        <member name="P:BaGet.Protocol.Models.ProtocolException.StatusCode">
-            <summary>
-            The response status code.
-            </summary>
-        </member>
-        <member name="P:BaGet.Protocol.Models.ProtocolException.ReasonPhrase">
-            <summary>
-            The response reason phrase.
-            </summary>
-        </member>
         <member name="T:BaGet.Protocol.NuGetClient">
             <summary>
             The <see cref="T:BaGet.Protocol.NuGetClient"/> allows you to interact with a NuGet server.
@@ -1313,6 +1375,23 @@
             </summary>
             <param name="clientFactory">The factory used to create NuGet clients.</param>
         </member>
+        <member name="M:BaGet.Protocol.NuGetClient.ExistsAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Check if a package exists.
+            </summary>
+            <param name="packageId">The package ID.</param>
+            <param name="cancellationToken">A token to cancel the task.</param>
+            <returns>Whether the package exists.</returns>
+        </member>
+        <member name="M:BaGet.Protocol.NuGetClient.ExistsAsync(System.String,NuGet.Versioning.NuGetVersion,System.Threading.CancellationToken)">
+            <summary>
+            Check if a package exists.
+            </summary>
+            <param name="packageId">The package ID.</param>
+            <param name="packageVersion">The package version.</param>
+            <param name="cancellationToken">A token to cancel the task.</param>
+            <returns>Whether the package exists.</returns>
+        </member>
         <member name="M:BaGet.Protocol.NuGetClient.GetPackageStreamAsync(System.String,NuGet.Versioning.NuGetVersion,System.Threading.CancellationToken)">
             <summary>
             Download a package (.nupkg), or throws if the package does not exist.
@@ -1320,7 +1399,7 @@
             <param name="packageId">The package ID.</param>
             <param name="packageVersion">The package version.</param>
             <param name="cancellationToken">A token to cancel the task.</param>
-            <returns>The package's content stream. The stream may not be seekable.</returns>
+            <returns>The package's content stream. The stream may be unseekable and may be unbuffered.</returns>
             <exception cref="T:BaGet.Protocol.Models.PackageNotFoundException">
                 The package could not be found.
             </exception>
@@ -1441,69 +1520,6 @@
             <param name="take">The number of results to include.</param>
             <param name="cancellationToken">A token to cancel the task.</param>
             <returns>The package IDs that matched the query.</returns>
-        </member>
-        <member name="T:BaGet.Protocol.NuGetClientFactory">
-            <summary>
-            The <see cref="T:BaGet.Protocol.NuGetClientFactory"/> creates clients to interact with a NuGet server.
-            Use this for advanced scenarios. For most scenarios, consider using <see cref="T:BaGet.Protocol.NuGetClient"/> instead.
-            </summary>
-        </member>
-        <member name="M:BaGet.Protocol.NuGetClientFactory.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:BaGet.Protocol.NuGetClientFactory"/> class
-            for mocking.
-            </summary>
-        </member>
-        <member name="M:BaGet.Protocol.NuGetClientFactory.#ctor(System.Net.Http.HttpClient,System.String)">
-             <summary>
-             Initializes a new instance of the <see cref="T:BaGet.Protocol.NuGetClientFactory"/> class.
-             </summary>
-             <param name="httpClient">The client used for HTTP requests.</param>
-             <param name="serviceIndexUrl">
-             The NuGet Service Index resource URL.
-            
-             For NuGet.org, use https://api.nuget.org/v3/index.json
-             </param>
-        </member>
-        <member name="M:BaGet.Protocol.NuGetClientFactory.CreateServiceIndexClientAsync(System.Threading.CancellationToken)">
-            <summary>
-            Create a client to interact with the NuGet Service Index resource.
-            
-            See https://docs.microsoft.com/en-us/nuget/api/service-index
-            </summary>
-            <returns>A client to interact with the NuGet Service Index resource.</returns>
-        </member>
-        <member name="M:BaGet.Protocol.NuGetClientFactory.CreatePackageContentClientAsync(System.Threading.CancellationToken)">
-             <summary>
-             Create a client to interact with the NuGet Package Content resource.
-            
-             See https://docs.microsoft.com/en-us/nuget/api/package-base-address-resource
-             </summary>
-             <returns>A client to interact with the NuGet Package Content resource.</returns>
-        </member>
-        <member name="M:BaGet.Protocol.NuGetClientFactory.CreatePackageMetadataClientAsync(System.Threading.CancellationToken)">
-            <summary>
-            Create a client to interact with the NuGet Package Metadata resource.
-            
-            See https://docs.microsoft.com/en-us/nuget/api/registration-base-url-resource
-            </summary>
-            <returns>A client to interact with the NuGet Package Metadata resource.</returns>
-        </member>
-        <member name="M:BaGet.Protocol.NuGetClientFactory.CreateSearchClientAsync(System.Threading.CancellationToken)">
-            <summary>
-            Create a client to interact with the NuGet Search resource.
-            
-            See https://docs.microsoft.com/en-us/nuget/api/search-query-service-resource
-            </summary>
-            <returns>A client to interact with the NuGet Search resource.</returns>
-        </member>
-        <member name="M:BaGet.Protocol.NuGetClientFactory.CreateCatalogClientAsync(System.Threading.CancellationToken)">
-            <summary>
-            Create a client to interact with the NuGet catalog resource.
-            
-            See https://docs.microsoft.com/en-us/nuget/api/catalog-resource
-            </summary>
-            <returns>A client to interact with the Catalog resource.</returns>
         </member>
         <member name="T:BaGet.Protocol.IPackageContentClient">
             <summary>
