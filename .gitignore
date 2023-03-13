@@ -10,3 +10,6 @@ obj/*
 /NuigetTool/NuigetTool/bin
 /NuigetTool/NuigetTool/obj
 
+/NuigetTool/.vs/NuigetTool
+/NuigetTool/NugetTool/bin
+/NuigetTool/NugetTool/obj

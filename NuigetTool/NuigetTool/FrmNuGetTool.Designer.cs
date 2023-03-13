@@ -66,8 +66,11 @@
             this.btnSearch = new DevExpress.XtraBars.Navigation.NavButton();
             this.btnDetail = new DevExpress.XtraBars.Navigation.NavButton();
             this.btnOpen = new DevExpress.XtraBars.Navigation.NavButton();
+            this.btnDownlaod = new DevExpress.XtraBars.Navigation.NavButton();
             this.packageMetadataBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.fluentDesignFormControl1 = new DevExpress.XtraBars.FluentDesignSystem.FluentDesignFormControl();
+            this.medLog = new DevExpress.XtraEditors.MemoEdit();
+            this.log = new DevExpress.XtraLayout.LayoutControlItem();
             this.fluentDesignFormContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
@@ -88,6 +91,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.tnpMain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.packageMetadataBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fluentDesignFormControl1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.medLog.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.log)).BeginInit();
             this.SuspendLayout();
             // 
             // fluentDesignFormContainer1
@@ -95,43 +100,49 @@
             this.fluentDesignFormContainer1.Controls.Add(this.layoutControl1);
             this.fluentDesignFormContainer1.Controls.Add(this.tnpMain);
             this.fluentDesignFormContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.fluentDesignFormContainer1.Location = new System.Drawing.Point(0, 37);
+            this.fluentDesignFormContainer1.Location = new System.Drawing.Point(0, 30);
+            this.fluentDesignFormContainer1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.fluentDesignFormContainer1.Name = "fluentDesignFormContainer1";
-            this.fluentDesignFormContainer1.Size = new System.Drawing.Size(1513, 810);
+            this.fluentDesignFormContainer1.Size = new System.Drawing.Size(1324, 883);
             this.fluentDesignFormContainer1.TabIndex = 0;
             // 
             // layoutControl1
             // 
+            this.layoutControl1.Controls.Add(this.medLog);
             this.layoutControl1.Controls.Add(this.chePreview);
             this.layoutControl1.Controls.Add(this.grdVersions);
             this.layoutControl1.Controls.Add(this.grdPackages);
             this.layoutControl1.Controls.Add(this.txtKeys);
             this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layoutControl1.Location = new System.Drawing.Point(0, 40);
+            this.layoutControl1.Location = new System.Drawing.Point(0, 31);
+            this.layoutControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.layoutControl1.Name = "layoutControl1";
             this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(952, 471, 812, 500);
             this.layoutControl1.Root = this.Root;
-            this.layoutControl1.Size = new System.Drawing.Size(1513, 770);
+            this.layoutControl1.Size = new System.Drawing.Size(1324, 852);
             this.layoutControl1.TabIndex = 1;
             this.layoutControl1.Text = "layoutControl1";
             // 
             // chePreview
             // 
             this.chePreview.EditValue = true;
-            this.chePreview.Location = new System.Drawing.Point(1407, 58);
+            this.chePreview.Location = new System.Drawing.Point(1228, 51);
+            this.chePreview.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.chePreview.Name = "chePreview";
             this.chePreview.Properties.Caption = "Preview";
-            this.chePreview.Size = new System.Drawing.Size(79, 24);
+            this.chePreview.Size = new System.Drawing.Size(70, 20);
             this.chePreview.StyleController = this.layoutControl1;
             this.chePreview.TabIndex = 9;
             // 
             // grdVersions
             // 
             this.grdVersions.DataSource = this.searchResultVersionBindingSource;
-            this.grdVersions.Location = new System.Drawing.Point(1047, 89);
+            this.grdVersions.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.grdVersions.Location = new System.Drawing.Point(915, 77);
             this.grdVersions.MainView = this.grvVersions;
+            this.grdVersions.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.grdVersions.Name = "grdVersions";
-            this.grdVersions.Size = new System.Drawing.Size(442, 657);
+            this.grdVersions.Size = new System.Drawing.Size(385, 561);
             this.grdVersions.TabIndex = 8;
             this.grdVersions.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.grvVersions});
@@ -146,42 +157,48 @@
             this.colRegistrationLeafUrl,
             this.colVersion1,
             this.colDownloads});
+            this.grvVersions.DetailHeight = 272;
             this.grvVersions.GridControl = this.grdVersions;
             this.grvVersions.Name = "grvVersions";
             this.grvVersions.OptionsBehavior.Editable = false;
+            this.grvVersions.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
+            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colVersion1, DevExpress.Data.ColumnSortOrder.Descending)});
             // 
             // colRegistrationLeafUrl
             // 
             this.colRegistrationLeafUrl.FieldName = "RegistrationLeafUrl";
-            this.colRegistrationLeafUrl.MinWidth = 25;
+            this.colRegistrationLeafUrl.MinWidth = 22;
             this.colRegistrationLeafUrl.Name = "colRegistrationLeafUrl";
             this.colRegistrationLeafUrl.Visible = true;
             this.colRegistrationLeafUrl.VisibleIndex = 0;
-            this.colRegistrationLeafUrl.Width = 94;
+            this.colRegistrationLeafUrl.Width = 82;
             // 
             // colVersion1
             // 
             this.colVersion1.FieldName = "Version";
-            this.colVersion1.MinWidth = 25;
+            this.colVersion1.MinWidth = 22;
             this.colVersion1.Name = "colVersion1";
+            this.colVersion1.SortMode = DevExpress.XtraGrid.ColumnSortMode.Value;
             this.colVersion1.Visible = true;
             this.colVersion1.VisibleIndex = 1;
-            this.colVersion1.Width = 94;
+            this.colVersion1.Width = 82;
             // 
             // colDownloads
             // 
             this.colDownloads.FieldName = "Downloads";
-            this.colDownloads.MinWidth = 25;
+            this.colDownloads.MinWidth = 22;
             this.colDownloads.Name = "colDownloads";
-            this.colDownloads.Width = 94;
+            this.colDownloads.Width = 82;
             // 
             // grdPackages
             // 
             this.grdPackages.DataSource = this.searchResultBindingSource;
-            this.grdPackages.Location = new System.Drawing.Point(24, 89);
+            this.grdPackages.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.grdPackages.Location = new System.Drawing.Point(24, 77);
             this.grdPackages.MainView = this.grvPackages;
+            this.grdPackages.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.grdPackages.Name = "grdPackages";
-            this.grdPackages.Size = new System.Drawing.Size(1019, 657);
+            this.grdPackages.Size = new System.Drawing.Size(887, 561);
             this.grdPackages.TabIndex = 5;
             this.grdPackages.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.grvPackages});
@@ -206,6 +223,7 @@
             this.colTitle,
             this.colTotalDownloads,
             this.colVersions});
+            this.grvPackages.DetailHeight = 272;
             this.grvPackages.GridControl = this.grdPackages;
             this.grvPackages.Name = "grvPackages";
             this.grvPackages.OptionsBehavior.Editable = false;
@@ -221,109 +239,110 @@
             // colPackageId
             // 
             this.colPackageId.FieldName = "PackageId";
-            this.colPackageId.MinWidth = 25;
+            this.colPackageId.MinWidth = 22;
             this.colPackageId.Name = "colPackageId";
             this.colPackageId.Visible = true;
             this.colPackageId.VisibleIndex = 0;
-            this.colPackageId.Width = 264;
+            this.colPackageId.Width = 231;
             // 
             // colVersion
             // 
             this.colVersion.FieldName = "Version";
-            this.colVersion.MinWidth = 25;
+            this.colVersion.MinWidth = 22;
             this.colVersion.Name = "colVersion";
             this.colVersion.Visible = true;
             this.colVersion.VisibleIndex = 1;
-            this.colVersion.Width = 151;
+            this.colVersion.Width = 132;
             // 
             // colDescription
             // 
             this.colDescription.FieldName = "Description";
-            this.colDescription.MinWidth = 25;
+            this.colDescription.MinWidth = 22;
             this.colDescription.Name = "colDescription";
             this.colDescription.Visible = true;
             this.colDescription.VisibleIndex = 2;
-            this.colDescription.Width = 151;
+            this.colDescription.Width = 132;
             // 
             // colAuthors
             // 
             this.colAuthors.FieldName = "Authors";
-            this.colAuthors.MinWidth = 25;
+            this.colAuthors.MinWidth = 22;
             this.colAuthors.Name = "colAuthors";
-            this.colAuthors.Width = 151;
+            this.colAuthors.Width = 132;
             // 
             // colIconUrl
             // 
             this.colIconUrl.FieldName = "IconUrl";
-            this.colIconUrl.MinWidth = 25;
+            this.colIconUrl.MinWidth = 22;
             this.colIconUrl.Name = "colIconUrl";
-            this.colIconUrl.Width = 151;
+            this.colIconUrl.Width = 132;
             // 
             // colLicenseUrl
             // 
             this.colLicenseUrl.FieldName = "LicenseUrl";
-            this.colLicenseUrl.MinWidth = 25;
+            this.colLicenseUrl.MinWidth = 22;
             this.colLicenseUrl.Name = "colLicenseUrl";
-            this.colLicenseUrl.Width = 151;
+            this.colLicenseUrl.Width = 132;
             // 
             // colProjectUrl
             // 
             this.colProjectUrl.FieldName = "ProjectUrl";
-            this.colProjectUrl.MinWidth = 25;
+            this.colProjectUrl.MinWidth = 22;
             this.colProjectUrl.Name = "colProjectUrl";
             this.colProjectUrl.Visible = true;
             this.colProjectUrl.VisibleIndex = 3;
-            this.colProjectUrl.Width = 151;
+            this.colProjectUrl.Width = 132;
             // 
             // colRegistrationIndexUrl
             // 
             this.colRegistrationIndexUrl.FieldName = "RegistrationIndexUrl";
-            this.colRegistrationIndexUrl.MinWidth = 25;
+            this.colRegistrationIndexUrl.MinWidth = 22;
             this.colRegistrationIndexUrl.Name = "colRegistrationIndexUrl";
-            this.colRegistrationIndexUrl.Width = 151;
+            this.colRegistrationIndexUrl.Width = 132;
             // 
             // colSummary
             // 
             this.colSummary.FieldName = "Summary";
-            this.colSummary.MinWidth = 25;
+            this.colSummary.MinWidth = 22;
             this.colSummary.Name = "colSummary";
-            this.colSummary.Width = 151;
+            this.colSummary.Width = 132;
             // 
             // colTags
             // 
             this.colTags.FieldName = "Tags";
-            this.colTags.MinWidth = 25;
+            this.colTags.MinWidth = 22;
             this.colTags.Name = "colTags";
-            this.colTags.Width = 151;
+            this.colTags.Width = 132;
             // 
             // colTitle
             // 
             this.colTitle.FieldName = "Title";
-            this.colTitle.MinWidth = 25;
+            this.colTitle.MinWidth = 22;
             this.colTitle.Name = "colTitle";
-            this.colTitle.Width = 216;
+            this.colTitle.Width = 189;
             // 
             // colTotalDownloads
             // 
             this.colTotalDownloads.FieldName = "TotalDownloads";
-            this.colTotalDownloads.MinWidth = 25;
+            this.colTotalDownloads.MinWidth = 22;
             this.colTotalDownloads.Name = "colTotalDownloads";
             this.colTotalDownloads.Visible = true;
             this.colTotalDownloads.VisibleIndex = 4;
-            this.colTotalDownloads.Width = 151;
+            this.colTotalDownloads.Width = 132;
             // 
             // colVersions
             // 
             this.colVersions.FieldName = "Versions";
-            this.colVersions.MinWidth = 25;
+            this.colVersions.MinWidth = 22;
             this.colVersions.Name = "colVersions";
-            this.colVersions.Width = 174;
+            this.colVersions.Width = 152;
             // 
             // txtKeys
             // 
-            this.txtKeys.Location = new System.Drawing.Point(116, 58);
+            this.txtKeys.Location = new System.Drawing.Point(108, 51);
+            this.txtKeys.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtKeys.Name = "txtKeys";
-            this.txtKeys.Size = new System.Drawing.Size(1281, 24);
+            this.txtKeys.Size = new System.Drawing.Size(1112, 20);
             this.txtKeys.StyleController = this.layoutControl1;
             this.txtKeys.TabIndex = 4;
             this.txtKeys.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtKeys_KeyDown);
@@ -335,7 +354,7 @@
             this.Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.layoutControlGroup1});
             this.Root.Name = "Root";
-            this.Root.Size = new System.Drawing.Size(1513, 770);
+            this.Root.Size = new System.Drawing.Size(1324, 852);
             this.Root.TextVisible = false;
             // 
             // layoutControlGroup1
@@ -344,10 +363,11 @@
             this.layoutControlItem1,
             this.layoutControlItem2,
             this.layoutControlItem3,
-            this.layoutControlItem4});
+            this.layoutControlItem4,
+            this.log});
             this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
             this.layoutControlGroup1.Name = "layoutControlGroup1";
-            this.layoutControlGroup1.Size = new System.Drawing.Size(1493, 750);
+            this.layoutControlGroup1.Size = new System.Drawing.Size(1304, 832);
             this.layoutControlGroup1.Text = "Search";
             // 
             // layoutControlItem1
@@ -355,36 +375,36 @@
             this.layoutControlItem1.Control = this.txtKeys;
             this.layoutControlItem1.Location = new System.Drawing.Point(0, 0);
             this.layoutControlItem1.Name = "layoutControlItem1";
-            this.layoutControlItem1.Padding = new DevExpress.XtraLayout.Utils.Padding(5, 5, 5, 5);
-            this.layoutControlItem1.Size = new System.Drawing.Size(1380, 34);
+            this.layoutControlItem1.Padding = new DevExpress.XtraLayout.Utils.Padding(4, 4, 4, 4);
+            this.layoutControlItem1.Size = new System.Drawing.Size(1202, 28);
             this.layoutControlItem1.Text = "Search Keys:";
-            this.layoutControlItem1.TextSize = new System.Drawing.Size(86, 18);
+            this.layoutControlItem1.TextSize = new System.Drawing.Size(70, 14);
             // 
             // layoutControlItem2
             // 
             this.layoutControlItem2.Control = this.grdPackages;
-            this.layoutControlItem2.Location = new System.Drawing.Point(0, 34);
+            this.layoutControlItem2.Location = new System.Drawing.Point(0, 28);
             this.layoutControlItem2.Name = "layoutControlItem2";
-            this.layoutControlItem2.Size = new System.Drawing.Size(1023, 661);
+            this.layoutControlItem2.Size = new System.Drawing.Size(891, 565);
             this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem2.TextVisible = false;
             // 
             // layoutControlItem3
             // 
             this.layoutControlItem3.Control = this.grdVersions;
-            this.layoutControlItem3.Location = new System.Drawing.Point(1023, 34);
+            this.layoutControlItem3.Location = new System.Drawing.Point(891, 28);
             this.layoutControlItem3.Name = "layoutControlItem3";
-            this.layoutControlItem3.Size = new System.Drawing.Size(446, 661);
+            this.layoutControlItem3.Size = new System.Drawing.Size(389, 565);
             this.layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem3.TextVisible = false;
             // 
             // layoutControlItem4
             // 
             this.layoutControlItem4.Control = this.chePreview;
-            this.layoutControlItem4.Location = new System.Drawing.Point(1380, 0);
+            this.layoutControlItem4.Location = new System.Drawing.Point(1202, 0);
             this.layoutControlItem4.Name = "layoutControlItem4";
-            this.layoutControlItem4.Padding = new DevExpress.XtraLayout.Utils.Padding(5, 5, 5, 5);
-            this.layoutControlItem4.Size = new System.Drawing.Size(89, 34);
+            this.layoutControlItem4.Padding = new DevExpress.XtraLayout.Utils.Padding(4, 4, 4, 4);
+            this.layoutControlItem4.Size = new System.Drawing.Size(78, 28);
             this.layoutControlItem4.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem4.TextVisible = false;
             // 
@@ -393,6 +413,7 @@
             this.tnpMain.Buttons.Add(this.btnSearch);
             this.tnpMain.Buttons.Add(this.btnDetail);
             this.tnpMain.Buttons.Add(this.btnOpen);
+            this.tnpMain.Buttons.Add(this.btnDownlaod);
             // 
             // tileNavCategory1
             // 
@@ -403,8 +424,9 @@
             this.tnpMain.DefaultCategory.Tile.DropDownOptions.BeakColor = System.Drawing.Color.Empty;
             this.tnpMain.Dock = System.Windows.Forms.DockStyle.Top;
             this.tnpMain.Location = new System.Drawing.Point(0, 0);
+            this.tnpMain.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tnpMain.Name = "tnpMain";
-            this.tnpMain.Size = new System.Drawing.Size(1513, 40);
+            this.tnpMain.Size = new System.Drawing.Size(1324, 31);
             this.tnpMain.TabIndex = 0;
             this.tnpMain.Text = "tileNavPane1";
             // 
@@ -429,6 +451,13 @@
             this.btnOpen.Name = "btnOpen";
             this.btnOpen.ElementClick += new DevExpress.XtraBars.Navigation.NavElementClickEventHandler(this.btnOpen_ElementClick);
             // 
+            // btnDownlaod
+            // 
+            this.btnDownlaod.Caption = "Download";
+            this.btnDownlaod.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnDownlaod.ImageOptions.Image")));
+            this.btnDownlaod.Name = "btnDownlaod";
+            this.btnDownlaod.ElementClick += new DevExpress.XtraBars.Navigation.NavElementClickEventHandler(this.btnDownlaod_ElementClick);
+            // 
             // packageMetadataBindingSource
             // 
             this.packageMetadataBindingSource.DataSource = typeof(BaGet.Protocol.Models.PackageMetadata);
@@ -437,20 +466,39 @@
             // 
             this.fluentDesignFormControl1.FluentDesignForm = this;
             this.fluentDesignFormControl1.Location = new System.Drawing.Point(0, 0);
+            this.fluentDesignFormControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.fluentDesignFormControl1.Name = "fluentDesignFormControl1";
-            this.fluentDesignFormControl1.Size = new System.Drawing.Size(1513, 37);
+            this.fluentDesignFormControl1.Size = new System.Drawing.Size(1324, 30);
             this.fluentDesignFormControl1.TabIndex = 2;
             this.fluentDesignFormControl1.TabStop = false;
             // 
+            // medLog
+            // 
+            this.medLog.Location = new System.Drawing.Point(24, 642);
+            this.medLog.Name = "medLog";
+            this.medLog.Size = new System.Drawing.Size(1276, 186);
+            this.medLog.StyleController = this.layoutControl1;
+            this.medLog.TabIndex = 10;
+            // 
+            // log
+            // 
+            this.log.Control = this.medLog;
+            this.log.Location = new System.Drawing.Point(0, 593);
+            this.log.Name = "log";
+            this.log.Size = new System.Drawing.Size(1280, 190);
+            this.log.TextSize = new System.Drawing.Size(0, 0);
+            this.log.TextVisible = false;
+            // 
             // FrmNuGetTool
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1513, 847);
+            this.ClientSize = new System.Drawing.Size(1324, 913);
             this.ControlContainer = this.fluentDesignFormContainer1;
             this.Controls.Add(this.fluentDesignFormContainer1);
             this.Controls.Add(this.fluentDesignFormControl1);
             this.FluentDesignFormControl = this.fluentDesignFormControl1;
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "FrmNuGetTool";
             this.Text = "Nuget Tool";
             this.TransparencyKey = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(255)))));
@@ -475,6 +523,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.tnpMain)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.packageMetadataBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fluentDesignFormControl1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.medLog.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.log)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -518,6 +568,9 @@
         private DevExpress.XtraGrid.Columns.GridColumn colDownloads;
         private DevExpress.XtraEditors.CheckEdit chePreview;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
+        private DevExpress.XtraBars.Navigation.NavButton btnDownlaod;
+        private DevExpress.XtraEditors.MemoEdit medLog;
+        private DevExpress.XtraLayout.LayoutControlItem log;
     }
 }
 

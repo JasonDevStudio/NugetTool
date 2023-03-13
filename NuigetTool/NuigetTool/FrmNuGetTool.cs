@@ -25,6 +25,18 @@ namespace NuigetTool
             this.grdPackages.DataSource = results;
         }
 
+        private void WriteLog(string msg)
+        {
+            Action<string> act = s =>
+            {
+                this.medLog.Text += $"{s}{Environment.NewLine}";
+                this.medLog.SelectionStart = this.medLog.Text.Length;
+                this.medLog.ScrollToCaret();
+            };
+
+            this.Invoke(act, msg);
+        }
+
         public void GetListPackageVersions()
         {
             var result = this.grvPackages.GetFocusedRow() as SearchResult;
@@ -94,6 +106,11 @@ namespace NuigetTool
         }
 
         private void btnPush_ElementClick(object sender, DevExpress.XtraBars.Navigation.NavElementEventArgs e)
+        {
+
+        }
+
+        private void btnDownlaod_ElementClick(object sender, DevExpress.XtraBars.Navigation.NavElementEventArgs e)
         {
 
         }
