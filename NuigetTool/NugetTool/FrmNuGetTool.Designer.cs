@@ -56,7 +56,7 @@
             colTitle = new DevExpress.XtraGrid.Columns.GridColumn();
             colTotalDownloads = new DevExpress.XtraGrid.Columns.GridColumn();
             colVersions = new DevExpress.XtraGrid.Columns.GridColumn();
-            txtKeys = new DevExpress.XtraEditors.TextEdit();
+            txtKeys = new DevExpress.XtraEditors.MemoEdit();
             Root = new DevExpress.XtraLayout.LayoutControlGroup();
             layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
             layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -72,6 +72,7 @@
             btnDownLoads = new DevExpress.XtraBars.Navigation.NavButton();
             packageMetadataBindingSource = new System.Windows.Forms.BindingSource(components);
             fluentDesignFormControl1 = new DevExpress.XtraBars.FluentDesignSystem.FluentDesignFormControl();
+            btnBatchDownload = new DevExpress.XtraBars.Navigation.NavButton();
             fluentDesignFormContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)layoutControl1).BeginInit();
             layoutControl1.SuspendLayout();
@@ -407,6 +408,7 @@
             tnpMain.Buttons.Add(btnOpen);
             tnpMain.Buttons.Add(btnDownlaod);
             tnpMain.Buttons.Add(btnDownLoads);
+            tnpMain.Buttons.Add(btnBatchDownload);
             // 
             // tileNavCategory1
             // 
@@ -472,6 +474,13 @@
             fluentDesignFormControl1.TabIndex = 2;
             fluentDesignFormControl1.TabStop = false;
             // 
+            // btnBatchDownload
+            // 
+            btnBatchDownload.Caption = "BatchDownload";
+            btnBatchDownload.ImageOptions.Image = (System.Drawing.Image)resources.GetObject("btnBatchDownload.ImageOptions.Image");
+            btnBatchDownload.Name = "btnBatchDownload";
+            btnBatchDownload.ElementClick += btnBatchDownload_ElementClick;
+            // 
             // FrmNuGetTool
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -520,7 +529,7 @@
         private DevExpress.XtraLayout.LayoutControl layoutControl1;
         private DevExpress.XtraLayout.LayoutControlGroup Root;
         private DevExpress.XtraBars.Navigation.NavButton btnDetail;
-        private DevExpress.XtraEditors.TextEdit txtKeys;
+        private DevExpress.XtraEditors.MemoEdit txtKeys;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
         private DevExpress.XtraGrid.GridControl grdPackages;
         private DevExpress.XtraGrid.Views.Grid.GridView grvPackages;
@@ -554,6 +563,7 @@
         private DevExpress.XtraEditors.MemoEdit medLog;
         private DevExpress.XtraLayout.LayoutControlItem log;
         private DevExpress.XtraBars.Navigation.NavButton btnDownLoads;
+        private DevExpress.XtraBars.Navigation.NavButton btnBatchDownload;
     }
 }
 

@@ -23,11 +23,11 @@ namespace NuigetTool
 {
     public partial class FrmNuGetTool : DevExpress.XtraBars.FluentDesignSystem.FluentDesignForm
     {
-        private void Search()
+        private async Task SearchAsync()
         {
             var keys = this.txtKeys.EditValue.ToString();
             var client = new NuGetClient("https://api.nuget.org/v3/index.json");
-            var results = Task.Factory.StartNew(() => client.SearchAsync(keys, this.chePreview.Checked).Result).Result;
+            var results = await client.SearchAsync(keys, this.chePreview.Checked);
             this.grdPackages.DataSource = results;
         }
 
@@ -45,15 +45,104 @@ namespace NuigetTool
 
         private async Task DownloadAsync()
         {
+            var result = this.grvPackages.GetFocusedRow() as SearchResult;
+            var version = this.grvVersions.GetFocusedRow() as SearchResultVersion;
+            var packageId = result.PackageId;
+            await this.DownloadPackageAsync(packageId, version.Version);
+            await this.DownloadDependenciesAsync(packageId, version.Version);
+            WriteLog($"--------------------------------------Download End--------------------------------------");
+        }
+
+        private async Task DownloadsAsync()
+        {
             try
             {
-                var result = this.grvPackages.GetFocusedRow() as SearchResult;
-                var version = this.grvVersions.GetFocusedRow() as SearchResultVersion;
-                var packageId = result.PackageId;
+                var tasks = new List<Task>();
+                var downloadCount = Convert.ToInt32(ConfigurationManager.AppSettings["DownloadVersions"]);
+                var rowIndexs = this.grvPackages.GetSelectedRows();
+
+                if (rowIndexs?.Any() ?? false)
+                {
+                    foreach (var rowIndex in rowIndexs)
+                    {
+                        var row = this.grvPackages.GetRow(rowIndex) as SearchResult;
+                        var versions = row.Versions.OrderByDescending(m => new NuGetVersion(m.Version)).ToList();
+                        var packageId = row.PackageId;
+                        var verCount = versions.Count > downloadCount ? downloadCount : versions.Count;
+
+                        for (int i = 0; i < verCount; i++)
+                        {
+                            var version = versions[i];
+                            var packageVersion = new NuGetVersion(version.Version);
+
+                            tasks.Add(this.DownloadPackageAsync(packageId, version.Version));
+                            tasks.Add(this.DownloadDependenciesAsync(packageId, version.Version));
+                        }
+                    }
+
+                    if (tasks?.Any() ?? false)
+                    {
+                        await Task.WhenAll(tasks);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                WriteLog($"{ex}");
+            }
+
+            WriteLog($"--------------------------------------Download End--------------------------------------");
+        }
+
+        private async Task BatchDownloadAsync()
+        {
+            try
+            {
+                var tasks = new List<Task>();
+                var keys = this.txtKeys.EditValue.ToString();
+                var lines = keys.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+                var client = new NuGetClient("https://api.nuget.org/v3/index.json");
+                var downloadCount = Convert.ToInt32(ConfigurationManager.AppSettings["DownloadVersions"]);
+
+                foreach (string line in lines)
+                {
+                    var packages = await client.GetPackageMetadataAsync(line.Trim());
+                    if (packages?.Any() ?? false)
+                    {
+                        var count = packages.Count > downloadCount ? downloadCount : packages.Count;
+                        packages = packages.OrderByDescending(x => x.Version).ToList();
+
+                        for (int i = 0; i < count; i++)
+                        {
+                            var version = packages[i].Version;
+                            var packageId = packages[i].PackageId;
+                            tasks.Add(this.DownloadPackageAsync(packageId, version));
+                            tasks.Add(this.DownloadDependenciesAsync(packageId, version));
+                        }
+                    }
+
+                    if (tasks?.Any() ?? false)
+                    {
+                        await Task.WhenAll(tasks);
+                    }
+
+                    WriteLog($"--------------------------------------Download {line} End--------------------------------------");
+                }
+            }
+            catch (Exception ex)
+            {
+                WriteLog($"{ex}");
+            }
+        }
+
+        private async Task DownloadPackageAsync(string packageId, string version)
+        {
+            try
+            {
                 var path = ConfigurationManager.AppSettings["DownloadPath"];
                 var packagePath = Path.Combine(path, $"{packageId}.{version}.nupkg");
                 var client = new NuGetClient("https://api.nuget.org/v3/index.json");
-                var packageVersion = new NuGetVersion(version.Version);
+                var packageVersion = new NuGetVersion(version);
 
                 if (!Directory.Exists(path))
                     Directory.CreateDirectory(path);
@@ -61,8 +150,9 @@ namespace NuigetTool
                 if (File.Exists(packagePath))
                 {
                     WriteLog($"Package [{packageId} {version}] already exists...");
-                    await Task.CompletedTask;
+                    return;
                 }
+
 
                 WriteLog($"Start Download package [{packageId} {version}] ...");
 
@@ -76,7 +166,7 @@ namespace NuigetTool
                     {
                         using (var fs = new FileStream(packagePath, FileMode.OpenOrCreate, FileAccess.ReadWrite))
                         {
-                            await packageStream.CopyToAsync(fs);
+                            packageStream.CopyTo(fs);
                             fs.Close();
                             WriteLog($"Downloaded package [{packageId} {version}] ...");
                         }
@@ -93,70 +183,37 @@ namespace NuigetTool
             }
         }
 
-        private async Task DownloadsAsync()
+        private async Task DownloadDependenciesAsync(string packageId, string version)
         {
-            try
+            var client = new NuGetClient("https://api.nuget.org/v3/index.json");
+            var package = await client.GetPackageMetadataAsync(packageId, new NuGetVersion(version));
+
+            if (package?.DependencyGroups?.Any() ?? false)
             {
-                var path = ConfigurationManager.AppSettings["DownloadPath"];
-                var downloadCount = Convert.ToInt32(ConfigurationManager.AppSettings["DownloadVersions"]);
-                var client = new NuGetClient("https://api.nuget.org/v3/index.json");
-                var rowIndexs = this.grvPackages.GetSelectedRows();
-
-                if (!Directory.Exists(path))
-                    Directory.CreateDirectory(path);
-
-                if (rowIndexs?.Any() ?? false)
+                foreach (var item in package.DependencyGroups)
                 {
-                    foreach (var rowIndex in rowIndexs)
+                    WriteLog($"Start Read DependencyGroups [{item.TargetFramework}] ...");
+
+                    if (item?.Dependencies?.Any() ?? false)
                     {
-                        var row = this.grvPackages.GetRow(rowIndex) as SearchResult;
-                        var versions = row.Versions.OrderByDescending(m => new NuGetVersion(m.Version)).ToList();
-                        var packageId = row.PackageId;
-                        var verCount = versions.Count > downloadCount ? downloadCount : versions.Count;
-
-                        for (int i = 0; i < verCount; i++)
+                        foreach (var dep in item.Dependencies)
                         {
-                            var version = versions[i];
-                            var packagePath = Path.Combine(path, $"{packageId}.{version.Version}.nupkg");
-                            var packageVersion = new NuGetVersion(version.Version);
+                            WriteLog($"Start Read Dependencies [{dep.Id}] ...");
 
-                            if (File.Exists(packagePath))
-                            {
-                                WriteLog($"Package [{packageId} {version.Version}] already exists...");
-                                await Task.CompletedTask;
-                            }
-
-                            WriteLog($"Start Download package [{packageId} {version.Version}] ...");
-
-                            var isExists = await client.ExistsAsync(packageId, packageVersion);
-
-                            if (isExists)
-                            {
-                                var packageStream = await client.DownloadPackageAsync(packageId, packageVersion);
-
-                                using (packageStream)
-                                {
-                                    using (var fs = new FileStream(packagePath, FileMode.OpenOrCreate, FileAccess.ReadWrite))
-                                    {
-                                        await packageStream.CopyToAsync(fs);
-                                        fs.Close();
-                                        WriteLog($"Downloaded package [{packageId} {version.Version}] ...");
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                WriteLog($"NotFound package [{packageId} {version.Version}] ...");
-                            }
+                            var vers = dep.Range.Split(',');
+                            var ver = vers.FirstOrDefault().Replace("[", string.Empty);
+                            await DownloadPackageAsync(dep.Id, ver);
                         }
-
-                        WriteLog($"Download package [{packageId} completed.");
+                    }
+                    else
+                    {
+                        WriteLog($"Not Found DependencyGroups [{item.TargetFramework}] ...");
                     }
                 }
             }
-            catch (Exception ex)
+            else
             {
-                WriteLog($"{ex}");
+                WriteLog($"Not Found DependencyGroups...");
             }
         }
 
@@ -179,9 +236,9 @@ namespace NuigetTool
             InitializeComponent();
         }
 
-        private void btnSearch_ElementClick(object sender, DevExpress.XtraBars.Navigation.NavElementEventArgs e)
+        private async void btnSearch_ElementClick(object sender, DevExpress.XtraBars.Navigation.NavElementEventArgs e)
         {
-            Search();
+            await SearchAsync();
         }
 
         private void btnDetail_ElementClick(object sender, DevExpress.XtraBars.Navigation.NavElementEventArgs e)
@@ -220,11 +277,11 @@ namespace NuigetTool
             this.txtKeys.Focus();
         }
 
-        private void txtKeys_KeyDown(object sender, KeyEventArgs e)
+        private async void txtKeys_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                this.Search();
+                await SearchAsync();
             }
         }
 
@@ -241,6 +298,11 @@ namespace NuigetTool
         private async void btnDownLoads_ElementClick(object sender, DevExpress.XtraBars.Navigation.NavElementEventArgs e)
         {
             await DownloadsAsync();
+        }
+
+        private async void btnBatchDownload_ElementClick(object sender, DevExpress.XtraBars.Navigation.NavElementEventArgs e)
+        {
+            await this.BatchDownloadAsync();
         }
     }
 }

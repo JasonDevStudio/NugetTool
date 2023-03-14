@@ -13,3 +13,7 @@ obj/*
 /NuigetTool/.vs/NuigetTool
 /NuigetTool/NugetTool/bin
 /NuigetTool/NugetTool/obj
+/NuigetTool/.vs/ProjectEvaluation
+**/.vs
+**/*.user
+/NuigetTool/NugetTool/Properties/PublishProfiles/FolderProfile.pubxml.user

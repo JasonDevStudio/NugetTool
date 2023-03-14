@@ -179,26 +179,6 @@ namespace NuigetTool
                             var vers = dep.Range.Split(',');
                             var ver = vers.FirstOrDefault().Replace("[",string.Empty);
                             DownloadPackage(dep.Id, ver);
-
-                            //var searchResults = Task.Factory.StartNew(() => client.SearchAsync(dep.Id, true).Result).Result;
-
-                            //if (searchResults != null && searchResults.Count > 0)
-                            //{
-                            //    foreach (var sea in searchResults)
-                            //    {
-                            //        if (sea.PackageId == dep.Id)
-                            //        {
-                            //            foreach (var ver in sea.Versions)
-                            //            {
-                            //                DownloadPackage(dep.Id, ver.Version);
-                            //            }
-                            //        } 
-                            //    }
-                            //}
-                            //else
-                            //{
-                            //    WriteLog($"Not Found Dependencies [{dep.Id}] versions ...");
-                            //}
                         }
                     }
                     else
