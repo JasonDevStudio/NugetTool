@@ -70,9 +70,11 @@
             btnOpen = new DevExpress.XtraBars.Navigation.NavButton();
             btnDownlaod = new DevExpress.XtraBars.Navigation.NavButton();
             btnDownLoads = new DevExpress.XtraBars.Navigation.NavButton();
+            btnBatchDownload = new DevExpress.XtraBars.Navigation.NavButton();
+            btnPush = new DevExpress.XtraBars.Navigation.NavButton();
+            btnPushPackages = new DevExpress.XtraBars.Navigation.NavButton();
             packageMetadataBindingSource = new System.Windows.Forms.BindingSource(components);
             fluentDesignFormControl1 = new DevExpress.XtraBars.FluentDesignSystem.FluentDesignFormControl();
-            btnBatchDownload = new DevExpress.XtraBars.Navigation.NavButton();
             fluentDesignFormContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)layoutControl1).BeginInit();
             layoutControl1.SuspendLayout();
@@ -409,6 +411,8 @@
             tnpMain.Buttons.Add(btnDownlaod);
             tnpMain.Buttons.Add(btnDownLoads);
             tnpMain.Buttons.Add(btnBatchDownload);
+            tnpMain.Buttons.Add(btnPush);
+            tnpMain.Buttons.Add(btnPushPackages);
             // 
             // tileNavCategory1
             // 
@@ -460,6 +464,28 @@
             btnDownLoads.Name = "btnDownLoads";
             btnDownLoads.ElementClick += btnDownLoads_ElementClick;
             // 
+            // btnBatchDownload
+            // 
+            btnBatchDownload.Caption = "BatchDownload";
+            btnBatchDownload.ImageOptions.Image = (System.Drawing.Image)resources.GetObject("btnBatchDownload.ImageOptions.Image");
+            btnBatchDownload.Name = "btnBatchDownload";
+            btnBatchDownload.ElementClick += btnBatchDownload_ElementClick;
+            // 
+            // btnPush
+            // 
+            btnPush.Caption = "PushPackages";
+            btnPush.ImageOptions.Image = (System.Drawing.Image)resources.GetObject("btnPush.ImageOptions.Image");
+            btnPush.Name = "btnPush";
+            btnPush.ElementClick += btnPush_ElementClick_1;
+            // 
+            // btnPushPackages
+            // 
+            btnPushPackages.Alignment = DevExpress.XtraBars.Navigation.NavButtonAlignment.Right;
+            btnPushPackages.Caption = "PushPackages";
+            btnPushPackages.ImageOptions.Image = (System.Drawing.Image)resources.GetObject("btnPushPackages.ImageOptions.Image");
+            btnPushPackages.Name = "btnPushPackages";
+            btnPushPackages.ElementClick += btnPushPackages_ElementClick;
+            // 
             // packageMetadataBindingSource
             // 
             packageMetadataBindingSource.DataSource = typeof(BaGet.Protocol.Models.PackageMetadata);
@@ -473,13 +499,6 @@
             fluentDesignFormControl1.Size = new System.Drawing.Size(1324, 31);
             fluentDesignFormControl1.TabIndex = 2;
             fluentDesignFormControl1.TabStop = false;
-            // 
-            // btnBatchDownload
-            // 
-            btnBatchDownload.Caption = "BatchDownload";
-            btnBatchDownload.ImageOptions.Image = (System.Drawing.Image)resources.GetObject("btnBatchDownload.ImageOptions.Image");
-            btnBatchDownload.Name = "btnBatchDownload";
-            btnBatchDownload.ElementClick += btnBatchDownload_ElementClick;
             // 
             // FrmNuGetTool
             // 
@@ -564,6 +583,8 @@
         private DevExpress.XtraLayout.LayoutControlItem log;
         private DevExpress.XtraBars.Navigation.NavButton btnDownLoads;
         private DevExpress.XtraBars.Navigation.NavButton btnBatchDownload;
+        private DevExpress.XtraBars.Navigation.NavButton btnPush;
+        private DevExpress.XtraBars.Navigation.NavButton btnPushPackages;
     }
 }
 

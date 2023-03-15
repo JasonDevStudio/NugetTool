@@ -18,6 +18,13 @@ using System.Windows.Forms;
 using System.Configuration;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using static DevExpress.Xpo.Helpers.AssociatedCollectionCriteriaHelper;
+using System.Diagnostics;
+using NuGet.Configuration;
+using NuGet.Protocol.Core.Types;
+using NuGet.Protocol;
+using System.Threading;
+using NugetTool.Properties;
+using DevExpress.XtraPrinting.Native.Lines;
 
 namespace NuigetTool
 {
@@ -217,6 +224,120 @@ namespace NuigetTool
             }
         }
 
+        public async Task Push1Async()
+        {
+            await Task.Run(() =>
+            {
+                try
+                {
+                    var apiKey = ConfigurationManager.AppSettings["ApiKey"];
+                    var nugetServer = ConfigurationManager.AppSettings["NugetServer"];
+                    var downloadPath = ConfigurationManager.AppSettings["DownloadPath"];
+                    var files = Directory.GetFiles(downloadPath, "*.nupkg");
+                    var nugetPaht = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "nuget.exe");
+
+                    if (!File.Exists(nugetPaht))
+                    {
+                        using (var fs = new FileStream(nugetPaht, FileMode.Create, FileAccess.Write))
+                        {
+                            fs.Write(Resource.nuget, 0, Resource.nuget.Length);
+                            fs.Close();
+                            fs.Dispose();
+                        }
+                    }
+
+                    var process = new Process();
+                    process.StartInfo.RedirectStandardError = true;
+                    process.StartInfo.RedirectStandardOutput = true;
+                    process.StartInfo.RedirectStandardInput = true;
+                    process.StartInfo.UseShellExecute = false;
+                    process.StartInfo.CreateNoWindow = true;
+                    process.OutputDataReceived += (s, e) => WriteLog(e.Data);
+                    process.ErrorDataReceived += (s, e) => WriteLog(e.Data);
+                    process.StartInfo.FileName = @"C:\Windows\System32\cmd.exe";
+                    process.Start();
+                    process.BeginOutputReadLine();
+                    process.BeginErrorReadLine();
+
+                    foreach (var item in files)
+                    {
+                        var pushCmd = $"\"{nugetPaht}\" push -Source {nugetServer} \"{item}\" -ApiKey {apiKey}";
+                        process.StandardInput.WriteLine(pushCmd);
+                    }
+
+                    process.StandardInput.WriteLine("exit");
+                    process.WaitForExit();
+                    WriteLog($"------------------------------------End Push------------------------------------");
+                    WriteLog($"");
+                    Directory.Delete(downloadPath);
+                }
+                catch (Exception ex)
+                {
+                    WriteLog($"{ex}");
+                }
+            });
+        }
+
+        public async Task PushAsync()
+        {
+            try
+            {
+                var tasks = new List<Task>();
+                var apiKey = ConfigurationManager.AppSettings["ApiKey"];
+                var nugetServer = ConfigurationManager.AppSettings["NugetServer"];
+                var downloadPath = ConfigurationManager.AppSettings["DownloadPath"];
+                var files = Directory.GetFiles(downloadPath, "*.nupkg");
+                var nugetPaht = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "nuget.exe");
+
+                if (!File.Exists(nugetPaht))
+                {
+                    using (var fs = new FileStream(nugetPaht, FileMode.Create, FileAccess.Write))
+                    {
+                        fs.Write(Resource.nuget, 0, Resource.nuget.Length);
+                        fs.Close();
+                        fs.Dispose();
+                    }
+                }
+
+                foreach (var item in files)
+                {
+                    var task = Task.Factory.StartNew(obj =>
+                    {
+                        var pushCmd = $"\"{nugetPaht}\" push -Source {nugetServer} \"{obj}\" -ApiKey {apiKey}";
+                        var process = new Process();
+                        process.StartInfo.RedirectStandardError = true;
+                        process.StartInfo.RedirectStandardOutput = true;
+                        process.StartInfo.RedirectStandardInput = true;
+                        process.StartInfo.UseShellExecute = false;
+                        process.StartInfo.CreateNoWindow = true;
+                        process.OutputDataReceived += (s, e) => WriteLog(e.Data);
+                        process.ErrorDataReceived += (s, e) => WriteLog(e.Data);
+                        process.StartInfo.FileName = @"C:\Windows\System32\cmd.exe";
+                        process.Start();
+                        process.BeginOutputReadLine();
+                        process.BeginErrorReadLine();
+                        process.StandardInput.WriteLine(pushCmd);
+                        process.StandardInput.WriteLine("exit");
+                        process.WaitForExit();
+
+                        WriteLog($"------------------------------------{obj} push end------------------------------------");
+                    }, item);
+
+                    tasks.Add(task);
+                }
+
+                await Task.WhenAll(tasks);
+                WriteLog($"========================================End Push========================================");
+                WriteLog($"");
+
+                Directory.Delete(downloadPath);
+            }
+            catch (Exception ex)
+            {
+                WriteLog($"{ex}");
+            }
+        }
+
         public void GetListPackageVersions()
         {
             var result = this.grvPackages.GetFocusedRow() as SearchResult;
@@ -303,6 +424,16 @@ namespace NuigetTool
         private async void btnBatchDownload_ElementClick(object sender, DevExpress.XtraBars.Navigation.NavElementEventArgs e)
         {
             await this.BatchDownloadAsync();
+        }
+
+        private async void btnPush_ElementClick_1(object sender, DevExpress.XtraBars.Navigation.NavElementEventArgs e)
+        {
+            await this.PushAsync();
+        }
+
+        private async void btnPushPackages_ElementClick(object sender, DevExpress.XtraBars.Navigation.NavElementEventArgs e)
+        {
+            await this.Push1Async();
         }
     }
 }
