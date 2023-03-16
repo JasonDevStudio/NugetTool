@@ -269,7 +269,9 @@ namespace NuigetTool
                     process.WaitForExit();
                     WriteLog($"------------------------------------End Push------------------------------------");
                     WriteLog($"");
-                    Directory.Delete(downloadPath);
+
+                    foreach (var item in files) 
+                        File.Delete(item); 
                 }
                 catch (Exception ex)
                 {
@@ -330,7 +332,8 @@ namespace NuigetTool
                 WriteLog($"========================================End Push========================================");
                 WriteLog($"");
 
-                Directory.Delete(downloadPath);
+                foreach (var item in files)
+                    File.Delete(item);
             }
             catch (Exception ex)
             {
