@@ -484,6 +484,7 @@
             btnPushPackages.Caption = "PushPackages";
             btnPushPackages.ImageOptions.Image = (System.Drawing.Image)resources.GetObject("btnPushPackages.ImageOptions.Image");
             btnPushPackages.Name = "btnPushPackages";
+            btnPushPackages.Visible = false;
             btnPushPackages.ElementClick += btnPushPackages_ElementClick;
             // 
             // packageMetadataBindingSource

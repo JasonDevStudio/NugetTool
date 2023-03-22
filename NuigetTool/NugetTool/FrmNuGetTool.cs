@@ -270,8 +270,8 @@ namespace NuigetTool
                     WriteLog($"------------------------------------End Push------------------------------------");
                     WriteLog($"");
 
-                    foreach (var item in files) 
-                        File.Delete(item); 
+                    foreach (var item in files)
+                        File.Delete(item);
                 }
                 catch (Exception ex)
                 {
