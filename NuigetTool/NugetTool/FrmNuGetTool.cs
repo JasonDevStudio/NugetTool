@@ -25,26 +25,27 @@ namespace NuigetTool
             var userName = ConfigurationManager.AppSettings["http_proxy.user"];
             var userPwd = ConfigurationManager.AppSettings["http_proxy.password"];
             var proxyUrl = ConfigurationManager.AppSettings["http_proxy.url"];
+            var nugetUrl = ConfigurationManager.AppSettings["NugetServer"];
 
             if (enable)
             {
-                // 创建一个NetworkCredential对象，指定代理的账号密码
-                var credential = new NetworkCredential(userName, userPwd);
-
                 // 创建一个WebProxy实例，传入代理服务器的地址和端口，以及NetworkCredential对象
-                var proxy = new System.Net.WebProxy(proxyUrl) { Credentials = credential };
+                var proxy = new System.Net.WebProxy(proxyUrl);
+
+                if (!string.IsNullOrWhiteSpace(userName) && !string.IsNullOrWhiteSpace(userPwd))
+                    proxy.Credentials = new NetworkCredential(userName, userPwd);  // 创建一个NetworkCredential对象，指定代理的账号密码
 
                 var httpClient = new HttpClient(new HttpClientHandler { Proxy = proxy, AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate });
-                var factory = new NuGetClientFactory(httpClient, "https://api.nuget.org/v3/index.json");
+                var factory = new NuGetClientFactory(httpClient, nugetUrl);
                 var client = new NuGetClient(factory);
                 return client;
             }
             else
             {
                 var httpClient = new HttpClient(new HttpClientHandler { AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate });
-                var factory = new NuGetClientFactory(httpClient, "https://api.nuget.org/v3/index.json");
+                var factory = new NuGetClientFactory(httpClient, nugetUrl);
                 var client = new NuGetClient(factory);
-                return client; 
+                return client;
             }
         }
 
