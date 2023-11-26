@@ -30,6 +30,16 @@
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmNuGetTool));
+            DevExpress.Utils.SuperToolTip superToolTip1 = new DevExpress.Utils.SuperToolTip();
+            DevExpress.Utils.ToolTipItem toolTipItem1 = new DevExpress.Utils.ToolTipItem();
+            DevExpress.Utils.SuperToolTip superToolTip2 = new DevExpress.Utils.SuperToolTip();
+            DevExpress.Utils.ToolTipItem toolTipItem2 = new DevExpress.Utils.ToolTipItem();
+            DevExpress.Utils.SuperToolTip superToolTip3 = new DevExpress.Utils.SuperToolTip();
+            DevExpress.Utils.ToolTipItem toolTipItem3 = new DevExpress.Utils.ToolTipItem();
+            DevExpress.Utils.SuperToolTip superToolTip4 = new DevExpress.Utils.SuperToolTip();
+            DevExpress.Utils.ToolTipItem toolTipItem4 = new DevExpress.Utils.ToolTipItem();
+            DevExpress.Utils.SuperToolTip superToolTip5 = new DevExpress.Utils.SuperToolTip();
+            DevExpress.Utils.ToolTipItem toolTipItem5 = new DevExpress.Utils.ToolTipItem();
             fluentDesignFormContainer1 = new DevExpress.XtraBars.FluentDesignSystem.FluentDesignFormContainer();
             layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
             medLog = new DevExpress.XtraEditors.MemoEdit();
@@ -66,12 +76,12 @@
             log = new DevExpress.XtraLayout.LayoutControlItem();
             tnpMain = new DevExpress.XtraBars.Navigation.TileNavPane();
             btnSearch = new DevExpress.XtraBars.Navigation.NavButton();
-            btnDetail = new DevExpress.XtraBars.Navigation.NavButton();
             btnOpen = new DevExpress.XtraBars.Navigation.NavButton();
             btnDownlaod = new DevExpress.XtraBars.Navigation.NavButton();
             btnDownLoads = new DevExpress.XtraBars.Navigation.NavButton();
             btnBatchDownload = new DevExpress.XtraBars.Navigation.NavButton();
             btnPush = new DevExpress.XtraBars.Navigation.NavButton();
+            btnOpenFolder = new DevExpress.XtraBars.Navigation.NavButton();
             btnPushPackages = new DevExpress.XtraBars.Navigation.NavButton();
             packageMetadataBindingSource = new System.Windows.Forms.BindingSource(components);
             fluentDesignFormControl1 = new DevExpress.XtraBars.FluentDesignSystem.FluentDesignFormControl();
@@ -138,7 +148,7 @@
             // chePreview
             // 
             chePreview.EditValue = true;
-            chePreview.Location = new System.Drawing.Point(1228, 47);
+            chePreview.Location = new System.Drawing.Point(1228, 57);
             chePreview.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             chePreview.Name = "chePreview";
             chePreview.Properties.Caption = "Preview";
@@ -150,11 +160,11 @@
             // 
             grdVersions.DataSource = searchResultVersionBindingSource;
             grdVersions.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            grdVersions.Location = new System.Drawing.Point(979, 73);
+            grdVersions.Location = new System.Drawing.Point(979, 93);
             grdVersions.MainView = grvVersions;
             grdVersions.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             grdVersions.Name = "grdVersions";
-            grdVersions.Size = new System.Drawing.Size(321, 563);
+            grdVersions.Size = new System.Drawing.Size(321, 543);
             grdVersions.TabIndex = 8;
             grdVersions.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { grvVersions });
             // 
@@ -169,6 +179,7 @@
             grvVersions.GridControl = grdVersions;
             grvVersions.Name = "grvVersions";
             grvVersions.OptionsBehavior.Editable = false;
+            grvVersions.OptionsSelection.MultiSelect = true;
             // 
             // colRegistrationLeafUrl
             // 
@@ -199,11 +210,11 @@
             // 
             grdPackages.DataSource = searchResultBindingSource;
             grdPackages.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            grdPackages.Location = new System.Drawing.Point(24, 73);
+            grdPackages.Location = new System.Drawing.Point(24, 93);
             grdPackages.MainView = grvPackages;
             grdPackages.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             grdPackages.Name = "grdPackages";
-            grdPackages.Size = new System.Drawing.Size(951, 563);
+            grdPackages.Size = new System.Drawing.Size(951, 543);
             grdPackages.TabIndex = 5;
             grdPackages.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { grvPackages });
             // 
@@ -334,7 +345,7 @@
             txtKeys.Location = new System.Drawing.Point(108, 47);
             txtKeys.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             txtKeys.Name = "txtKeys";
-            txtKeys.Size = new System.Drawing.Size(1112, 20);
+            txtKeys.Size = new System.Drawing.Size(1112, 40);
             txtKeys.StyleController = layoutControl1;
             txtKeys.TabIndex = 4;
             txtKeys.KeyDown += txtKeys_KeyDown;
@@ -360,37 +371,44 @@
             // 
             layoutControlItem1.Control = txtKeys;
             layoutControlItem1.Location = new System.Drawing.Point(0, 0);
+            layoutControlItem1.MinSize = new System.Drawing.Size(100, 48);
             layoutControlItem1.Name = "layoutControlItem1";
             layoutControlItem1.Padding = new DevExpress.XtraLayout.Utils.Padding(4, 4, 4, 4);
-            layoutControlItem1.Size = new System.Drawing.Size(1202, 28);
+            layoutControlItem1.Size = new System.Drawing.Size(1202, 48);
+            layoutControlItem1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            layoutControlItem1.StartNewLine = true;
             layoutControlItem1.Text = "Search Keys:";
             layoutControlItem1.TextSize = new System.Drawing.Size(70, 14);
             // 
             // layoutControlItem2
             // 
             layoutControlItem2.Control = grdPackages;
-            layoutControlItem2.Location = new System.Drawing.Point(0, 28);
+            layoutControlItem2.Location = new System.Drawing.Point(0, 48);
             layoutControlItem2.Name = "layoutControlItem2";
-            layoutControlItem2.Size = new System.Drawing.Size(955, 567);
+            layoutControlItem2.Size = new System.Drawing.Size(955, 547);
             layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
             layoutControlItem2.TextVisible = false;
             // 
             // layoutControlItem3
             // 
             layoutControlItem3.Control = grdVersions;
-            layoutControlItem3.Location = new System.Drawing.Point(955, 28);
+            layoutControlItem3.Location = new System.Drawing.Point(955, 48);
             layoutControlItem3.Name = "layoutControlItem3";
-            layoutControlItem3.Size = new System.Drawing.Size(325, 567);
+            layoutControlItem3.Size = new System.Drawing.Size(325, 547);
             layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
             layoutControlItem3.TextVisible = false;
             // 
             // layoutControlItem4
             // 
+            layoutControlItem4.ContentVertAlignment = DevExpress.Utils.VertAlignment.Center;
             layoutControlItem4.Control = chePreview;
             layoutControlItem4.Location = new System.Drawing.Point(1202, 0);
+            layoutControlItem4.MaxSize = new System.Drawing.Size(0, 48);
+            layoutControlItem4.MinSize = new System.Drawing.Size(74, 48);
             layoutControlItem4.Name = "layoutControlItem4";
             layoutControlItem4.Padding = new DevExpress.XtraLayout.Utils.Padding(4, 4, 4, 4);
-            layoutControlItem4.Size = new System.Drawing.Size(78, 28);
+            layoutControlItem4.Size = new System.Drawing.Size(78, 48);
+            layoutControlItem4.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             layoutControlItem4.TextSize = new System.Drawing.Size(0, 0);
             layoutControlItem4.TextVisible = false;
             // 
@@ -406,12 +424,12 @@
             // tnpMain
             // 
             tnpMain.Buttons.Add(btnSearch);
-            tnpMain.Buttons.Add(btnDetail);
             tnpMain.Buttons.Add(btnOpen);
             tnpMain.Buttons.Add(btnDownlaod);
             tnpMain.Buttons.Add(btnDownLoads);
             tnpMain.Buttons.Add(btnBatchDownload);
             tnpMain.Buttons.Add(btnPush);
+            tnpMain.Buttons.Add(btnOpenFolder);
             tnpMain.Buttons.Add(btnPushPackages);
             // 
             // tileNavCategory1
@@ -432,22 +450,22 @@
             // btnSearch
             // 
             btnSearch.Caption = "Search";
-            btnSearch.ImageOptions.Image = (System.Drawing.Image)resources.GetObject("btnSearch.ImageOptions.Image");
+            btnSearch.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btnSearch.ImageOptions.SvgImage");
+            btnSearch.ImageOptions.SvgImageSize = new System.Drawing.Size(16, 16);
             btnSearch.Name = "btnSearch";
+            toolTipItem1.Text = "搜索关键字";
+            superToolTip1.Items.Add(toolTipItem1);
+            btnSearch.SuperTip = superToolTip1;
             btnSearch.ElementClick += btnSearch_ElementClick;
-            // 
-            // btnDetail
-            // 
-            btnDetail.Caption = "Detail";
-            btnDetail.ImageOptions.Image = (System.Drawing.Image)resources.GetObject("btnDetail.ImageOptions.Image");
-            btnDetail.Name = "btnDetail";
-            btnDetail.ElementClick += btnDetail_ElementClick;
             // 
             // btnOpen
             // 
             btnOpen.Caption = "Open";
             btnOpen.ImageOptions.Image = (System.Drawing.Image)resources.GetObject("btnOpen.ImageOptions.Image");
             btnOpen.Name = "btnOpen";
+            toolTipItem2.Text = "打开Nuget包详细信息";
+            superToolTip2.Items.Add(toolTipItem2);
+            btnOpen.SuperTip = superToolTip2;
             btnOpen.ElementClick += btnOpen_ElementClick;
             // 
             // btnDownlaod
@@ -455,13 +473,19 @@
             btnDownlaod.Caption = "Download";
             btnDownlaod.ImageOptions.Image = (System.Drawing.Image)resources.GetObject("btnDownlaod.ImageOptions.Image");
             btnDownlaod.Name = "btnDownlaod";
+            toolTipItem3.Text = "下载焦点行选中的Nuget包,以及选中的多个版本";
+            superToolTip3.Items.Add(toolTipItem3);
+            btnDownlaod.SuperTip = superToolTip3;
             btnDownlaod.ElementClick += btnDownlaod_ElementClick;
             // 
             // btnDownLoads
             // 
-            btnDownLoads.Caption = "DownLoads";
+            btnDownLoads.Caption = "Downloads";
             btnDownLoads.ImageOptions.Image = (System.Drawing.Image)resources.GetObject("btnDownLoads.ImageOptions.Image");
             btnDownLoads.Name = "btnDownLoads";
+            toolTipItem4.Text = "下载选中的多个Nuget包";
+            superToolTip4.Items.Add(toolTipItem4);
+            btnDownLoads.SuperTip = superToolTip4;
             btnDownLoads.ElementClick += btnDownLoads_ElementClick;
             // 
             // btnBatchDownload
@@ -469,6 +493,10 @@
             btnBatchDownload.Caption = "BatchDownload";
             btnBatchDownload.ImageOptions.Image = (System.Drawing.Image)resources.GetObject("btnBatchDownload.ImageOptions.Image");
             btnBatchDownload.Name = "btnBatchDownload";
+            toolTipItem5.Text = "批量搜索关键字下载\r\n关键字支持换行";
+            superToolTip5.Items.Add(toolTipItem5);
+            btnBatchDownload.SuperTip = superToolTip5;
+            btnBatchDownload.Visible = false;
             btnBatchDownload.ElementClick += btnBatchDownload_ElementClick;
             // 
             // btnPush
@@ -477,6 +505,14 @@
             btnPush.ImageOptions.Image = (System.Drawing.Image)resources.GetObject("btnPush.ImageOptions.Image");
             btnPush.Name = "btnPush";
             btnPush.ElementClick += btnPush_ElementClick_1;
+            // 
+            // btnOpenFolder
+            // 
+            btnOpenFolder.Caption = "Open Folder";
+            btnOpenFolder.ImageOptions.SvgImage = (DevExpress.Utils.Svg.SvgImage)resources.GetObject("btnOpenFolder.ImageOptions.SvgImage");
+            btnOpenFolder.ImageOptions.SvgImageSize = new System.Drawing.Size(16, 16);
+            btnOpenFolder.Name = "btnOpenFolder";
+            btnOpenFolder.ElementClick += btnOpenFolder_ElementClick;
             // 
             // btnPushPackages
             // 
@@ -548,7 +584,6 @@
         private DevExpress.XtraBars.Navigation.NavButton btnSearch;
         private DevExpress.XtraLayout.LayoutControl layoutControl1;
         private DevExpress.XtraLayout.LayoutControlGroup Root;
-        private DevExpress.XtraBars.Navigation.NavButton btnDetail;
         private DevExpress.XtraEditors.MemoEdit txtKeys;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
         private DevExpress.XtraGrid.GridControl grdPackages;
@@ -586,6 +621,7 @@
         private DevExpress.XtraBars.Navigation.NavButton btnBatchDownload;
         private DevExpress.XtraBars.Navigation.NavButton btnPush;
         private DevExpress.XtraBars.Navigation.NavButton btnPushPackages;
+        private DevExpress.XtraBars.Navigation.NavButton btnOpenFolder;
     }
 }
 

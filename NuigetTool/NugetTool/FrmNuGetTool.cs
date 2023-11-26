@@ -1,40 +1,69 @@
-﻿using BaGet.Protocol;
-using BaGet.Protocol.Models;
-using DevExpress.Xpo;
-using DevExpress.XtraBars;
-using DevExpress.XtraEditors;
-using NuGet.Versioning;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.Configuration;
 using System.Data;
-using System.Drawing;
-using System.IO.Packaging;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Configuration;
-using DevExpress.XtraGrid.Views.Grid.ViewInfo;
-using static DevExpress.Xpo.Helpers.AssociatedCollectionCriteriaHelper;
-using System.Diagnostics;
-using NuGet.Configuration;
-using NuGet.Protocol.Core.Types;
-using NuGet.Protocol;
-using System.Threading;
+using BaGet.Protocol;
+using BaGet.Protocol.Models;
+using DevExpress.XtraEditors;
+using NuGet.Versioning;
 using NugetTool.Properties;
-using DevExpress.XtraPrinting.Native.Lines;
 
 namespace NuigetTool
 {
     public partial class FrmNuGetTool : DevExpress.XtraBars.FluentDesignSystem.FluentDesignForm
     {
+        private NuGetClient CreateClient()
+        {
+            var enable = Convert.ToBoolean(ConfigurationManager.AppSettings["http_proxy.enable"]);
+            var userName = ConfigurationManager.AppSettings["http_proxy.user"];
+            var userPwd = ConfigurationManager.AppSettings["http_proxy.password"];
+            var proxyUrl = ConfigurationManager.AppSettings["http_proxy.url"];
+
+            if (enable)
+            {
+                // 创建一个NetworkCredential对象，指定代理的账号密码
+                var credential = new NetworkCredential(userName, userPwd);
+
+                // 创建一个WebProxy实例，传入代理服务器的地址和端口，以及NetworkCredential对象
+                var proxy = new System.Net.WebProxy(proxyUrl) { Credentials = credential };
+
+                var httpClient = new HttpClient(new HttpClientHandler { Proxy = proxy, AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate });
+                var factory = new NuGetClientFactory(httpClient, "https://api.nuget.org/v3/index.json");
+                var client = new NuGetClient(factory);
+                return client;
+            }
+            else
+            {
+                var httpClient = new HttpClient(new HttpClientHandler { AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate });
+                var factory = new NuGetClientFactory(httpClient, "https://api.nuget.org/v3/index.json");
+                var client = new NuGetClient(factory);
+                return client; 
+            }
+        }
+
         private async Task SearchAsync()
         {
+            var _client = this.CreateClient();
+            var results = new List<SearchResult>();
             var keys = this.txtKeys.EditValue.ToString();
-            var client = new NuGetClient("https://api.nuget.org/v3/index.json");
-            var results = await client.SearchAsync(keys, this.chePreview.Checked);
+            var lines = keys.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+
+            foreach (var line in lines)
+            {
+                if (!string.IsNullOrWhiteSpace(line))
+                {
+                    var tmp = await _client.SearchAsync(line, this.chePreview.Checked);
+                    results.AddRange(tmp);
+                }
+            }
+
             this.grdPackages.DataSource = results;
         }
 
@@ -53,11 +82,18 @@ namespace NuigetTool
         private async Task DownloadAsync()
         {
             var result = this.grvPackages.GetFocusedRow() as SearchResult;
-            var version = this.grvVersions.GetFocusedRow() as SearchResultVersion;
-            var packageId = result.PackageId;
-            await this.DownloadPackageAsync(packageId, version.Version);
-            await this.DownloadDependenciesAsync(packageId, version.Version);
-            WriteLog($"--------------------------------------Download End--------------------------------------");
+            var versions = this.grvVersions.GetSelectedRows().Select(m => this.grvVersions.GetRow(m) as SearchResultVersion).ToList();
+
+            foreach (var version in versions)
+            {
+                var packageId = result.PackageId;
+                await this.DownloadPackageAsync(packageId, version.Version);
+                await this.DownloadDependenciesAsync(packageId, version.Version);
+                WriteLog($"--------------------------------------Download [{version.Version}] End--------------------------------------");
+            }
+
+
+            WriteLog($"--------------------------------------Download [{result.PackageId}] End--------------------------------------");
         }
 
         private async Task DownloadsAsync()
@@ -108,12 +144,12 @@ namespace NuigetTool
                 var tasks = new List<Task>();
                 var keys = this.txtKeys.EditValue.ToString();
                 var lines = keys.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
-                var client = new NuGetClient("https://api.nuget.org/v3/index.json");
                 var downloadCount = Convert.ToInt32(ConfigurationManager.AppSettings["DownloadVersions"]);
+                var _client = this.CreateClient();
 
                 foreach (string line in lines)
                 {
-                    var packages = await client.GetPackageMetadataAsync(line.Trim());
+                    var packages = await _client.GetPackageMetadataAsync(line.Trim());
                     if (packages?.Any() ?? false)
                     {
                         var count = packages.Count > downloadCount ? downloadCount : packages.Count;
@@ -146,9 +182,9 @@ namespace NuigetTool
         {
             try
             {
+                var _client = this.CreateClient();
                 var path = ConfigurationManager.AppSettings["DownloadPath"];
                 var packagePath = Path.Combine(path, $"{packageId}.{version}.nupkg");
-                var client = new NuGetClient("https://api.nuget.org/v3/index.json");
                 var packageVersion = new NuGetVersion(version);
 
                 if (!Directory.Exists(path))
@@ -163,11 +199,11 @@ namespace NuigetTool
 
                 WriteLog($"Start Download package [{packageId} {version}] ...");
 
-                var isExists = await client.ExistsAsync(packageId, packageVersion);
+                var isExists = await _client.ExistsAsync(packageId, packageVersion);
 
                 if (isExists)
                 {
-                    var packageStream = await client.DownloadPackageAsync(packageId, packageVersion);
+                    var packageStream = await _client.DownloadPackageAsync(packageId, packageVersion);
 
                     using (packageStream)
                     {
@@ -192,8 +228,8 @@ namespace NuigetTool
 
         private async Task DownloadDependenciesAsync(string packageId, string version)
         {
-            var client = new NuGetClient("https://api.nuget.org/v3/index.json");
-            var package = await client.GetPackageMetadataAsync(packageId, new NuGetVersion(version));
+            var _client = this.CreateClient();
+            var package = await _client.GetPackageMetadataAsync(packageId, new NuGetVersion(version));
 
             if (package?.DependencyGroups?.Any() ?? false)
             {
@@ -343,9 +379,9 @@ namespace NuigetTool
 
         public void GetListPackageVersions()
         {
+            var _client = this.CreateClient();
             var result = this.grvPackages.GetFocusedRow() as SearchResult;
-            var client = new NuGetClient("https://api.nuget.org/v3/index.json");
-            var versions = Task.Factory.StartNew(() => client.ListPackageVersionsAsync(result.PackageId, chePreview.Checked, default).Result).Result;
+            var versions = Task.Factory.StartNew(() => _client.ListPackageVersionsAsync(result.PackageId, chePreview.Checked, default).Result).Result;
             this.grdVersions.DataSource = versions;
         }
 
@@ -365,22 +401,17 @@ namespace NuigetTool
             await SearchAsync();
         }
 
-        private void btnDetail_ElementClick(object sender, DevExpress.XtraBars.Navigation.NavElementEventArgs e)
-        {
-            GetListPackageVersions();
-        }
-
         private void btnOpen_ElementClick(object sender, DevExpress.XtraBars.Navigation.NavElementEventArgs e)
         {
+            var _client = this.CreateClient();
             var result = this.grvPackages.GetFocusedRow() as SearchResult;
             var version = this.grvVersions.GetFocusedRow() as SearchResultVersion;
-            var client = new NuGetClient("https://api.nuget.org/v3/index.json");
 
-            var isExists = Task.Factory.StartNew(() => client.ExistsAsync(result.PackageId, new NuGetVersion(version.Version)).Result).Result;
+            var isExists = Task.Factory.StartNew(() => _client.ExistsAsync(result.PackageId, new NuGetVersion(version.Version)).Result).Result;
 
             if (isExists)
             {
-                var package = Task.Factory.StartNew(() => client.GetPackageMetadataAsync(result.PackageId, new NuGetVersion(version.Version)).Result).Result;
+                var package = Task.Factory.StartNew(() => _client.GetPackageMetadataAsync(result.PackageId, new NuGetVersion(version.Version)).Result).Result;
                 var frm = new FrmPackageDetail();
                 frm.SetData(package);
                 frm.Show();
@@ -403,9 +434,11 @@ namespace NuigetTool
 
         private async void txtKeys_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            if (e.Modifiers == Keys.Control && e.KeyCode == Keys.Enter)
             {
                 await SearchAsync();
+                e.Handled = true;
+                return;
             }
         }
 
@@ -437,6 +470,12 @@ namespace NuigetTool
         private async void btnPushPackages_ElementClick(object sender, DevExpress.XtraBars.Navigation.NavElementEventArgs e)
         {
             await this.Push1Async();
+        }
+
+        private void btnOpenFolder_ElementClick(object sender, DevExpress.XtraBars.Navigation.NavElementEventArgs e)
+        {
+            var folderPath = ConfigurationManager.AppSettings["DownloadPath"];
+            Process.Start("explorer.exe", folderPath);
         }
     }
 }
