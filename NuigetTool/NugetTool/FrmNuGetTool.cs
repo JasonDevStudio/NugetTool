@@ -323,7 +323,7 @@ namespace NuigetTool
             {
                 var tasks = new List<Task>();
                 var apiKey = ConfigurationManager.AppSettings["ApiKey"];
-                var nugetServer = ConfigurationManager.AppSettings["NugetServer"];
+                var nugetServer = ConfigurationManager.AppSettings["LocalNugetServer"];
                 var downloadPath = ConfigurationManager.AppSettings["DownloadPath"];
                 var files = Directory.GetFiles(downloadPath, "*.nupkg");
                 var nugetPaht = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "nuget.exe");
